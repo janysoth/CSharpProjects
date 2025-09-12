@@ -1,0 +1,15 @@
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/bin/Debug/net10.0/Day3ControlFlow
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/bin/Debug/net10.0/Day3ControlFlow.deps.json
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/bin/Debug/net10.0/Day3ControlFlow.runtimeconfig.json
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/bin/Debug/net10.0/Day3ControlFlow.dll
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/bin/Debug/net10.0/Day3ControlFlow.pdb
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/obj/Debug/net10.0/Day3ControlFlow.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/obj/Debug/net10.0/Day3ControlFlow.AssemblyInfoInputs.cache
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/obj/Debug/net10.0/Day3ControlFlow.AssemblyInfo.cs
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/obj/Debug/net10.0/Day3ControlFlow.csproj.CoreCompileInputs.cache
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/obj/Debug/net10.0/Day3ControlFlow.sourcelink.json
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/obj/Debug/net10.0/Day3ControlFlow.dll
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/obj/Debug/net10.0/refint/Day3ControlFlow.dll
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/obj/Debug/net10.0/Day3ControlFlow.pdb
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/obj/Debug/net10.0/Day3ControlFlow.genruntimeconfig.cache
+/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/obj/Debug/net10.0/ref/Day3ControlFlow.dll
