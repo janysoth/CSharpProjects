@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/Day3ControlFlow.csproj": {}
+    "/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day3-ControlFlow/Day3ControlFlow.csproj": {}
   },
   "projects": {
-    "/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/Day3ControlFlow.csproj": {
+    "/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day3-ControlFlow/Day3ControlFlow.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/Day3ControlFlow.csproj",
+        "projectUniqueName": "/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day3-ControlFlow/Day3ControlFlow.csproj",
         "projectName": "Day3ControlFlow",
-        "projectPath": "/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/Day3ControlFlow.csproj",
+        "projectPath": "/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day3-ControlFlow/Day3ControlFlow.csproj",
         "packagesPath": "/Users/jonnyvornsoth/.nuget/packages/",
-        "outputPath": "/Users/jonnyvornsoth/Documents/C#Projects/C-Projects/Week1/Day3ControlFlow/obj/",
+        "outputPath": "/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day3-ControlFlow/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/jonnyvornsoth/.nuget/NuGet/NuGet.Config"

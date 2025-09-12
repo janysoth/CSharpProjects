@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Day3ControlFlow")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+832bb687eefd33541d2e4a5adfbd64b13f5ef7d4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+540ab6b102b645d32cc2fd3559208ecbc867f3d1")]
 [assembly: System.Reflection.AssemblyProductAttribute("Day3ControlFlow")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Day3ControlFlow")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
