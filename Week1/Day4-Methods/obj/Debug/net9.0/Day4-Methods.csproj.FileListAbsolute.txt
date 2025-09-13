@@ -1,0 +1,15 @@
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/bin/Debug/net9.0/Day4-Methods
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/bin/Debug/net9.0/Day4-Methods.deps.json
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/bin/Debug/net9.0/Day4-Methods.runtimeconfig.json
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/bin/Debug/net9.0/Day4-Methods.dll
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/bin/Debug/net9.0/Day4-Methods.pdb
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/obj/Debug/net9.0/Day4-Methods.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/obj/Debug/net9.0/Day4-Methods.AssemblyInfoInputs.cache
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/obj/Debug/net9.0/Day4-Methods.AssemblyInfo.cs
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/obj/Debug/net9.0/Day4-Methods.csproj.CoreCompileInputs.cache
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/obj/Debug/net9.0/Day4-Methods.sourcelink.json
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/obj/Debug/net9.0/Day4-Methods.dll
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/obj/Debug/net9.0/refint/Day4-Methods.dll
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/obj/Debug/net9.0/Day4-Methods.pdb
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/obj/Debug/net9.0/Day4-Methods.genruntimeconfig.cache
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-Methods/obj/Debug/net9.0/ref/Day4-Methods.dll

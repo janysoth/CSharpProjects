@@ -1,0 +1,15 @@
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/bin/Debug/net9.0/Day4-MethodsFunctions
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/bin/Debug/net9.0/Day4-MethodsFunctions.deps.json
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/bin/Debug/net9.0/Day4-MethodsFunctions.runtimeconfig.json
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/bin/Debug/net9.0/Day4-MethodsFunctions.dll
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/bin/Debug/net9.0/Day4-MethodsFunctions.pdb
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/obj/Debug/net9.0/Day4-MethodsFunctions.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/obj/Debug/net9.0/Day4-MethodsFunctions.AssemblyInfoInputs.cache
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/obj/Debug/net9.0/Day4-MethodsFunctions.AssemblyInfo.cs
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/obj/Debug/net9.0/Day4-MethodsFunctions.csproj.CoreCompileInputs.cache
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/obj/Debug/net9.0/Day4-MethodsFunctions.sourcelink.json
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/obj/Debug/net9.0/Day4-MethodsFunctions.dll
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/obj/Debug/net9.0/refint/Day4-MethodsFunctions.dll
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/obj/Debug/net9.0/Day4-MethodsFunctions.pdb
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/obj/Debug/net9.0/Day4-MethodsFunctions.genruntimeconfig.cache
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week1/Day4-MethodsFunctions/obj/Debug/net9.0/ref/Day4-MethodsFunctions.dll
