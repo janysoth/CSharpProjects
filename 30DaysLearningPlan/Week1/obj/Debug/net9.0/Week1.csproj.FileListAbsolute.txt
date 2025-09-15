@@ -1,0 +1,15 @@
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/bin/Debug/net9.0/Week1
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/bin/Debug/net9.0/Week1.deps.json
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/bin/Debug/net9.0/Week1.runtimeconfig.json
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/bin/Debug/net9.0/Week1.dll
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/bin/Debug/net9.0/Week1.pdb
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/obj/Debug/net9.0/Week1.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/obj/Debug/net9.0/Week1.AssemblyInfoInputs.cache
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/obj/Debug/net9.0/Week1.AssemblyInfo.cs
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/obj/Debug/net9.0/Week1.csproj.CoreCompileInputs.cache
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/obj/Debug/net9.0/Week1.sourcelink.json
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/obj/Debug/net9.0/Week1.dll
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/obj/Debug/net9.0/refint/Week1.dll
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/obj/Debug/net9.0/Week1.pdb
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/obj/Debug/net9.0/Week1.genruntimeconfig.cache
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week1/obj/Debug/net9.0/ref/Week1.dll
