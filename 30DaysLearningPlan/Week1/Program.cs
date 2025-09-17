@@ -2,6 +2,8 @@
 using Day1;
 using Day2;
 using Day3;
+using Day4;
+using Day5;
 
 class Program
 {
@@ -10,11 +12,24 @@ class Program
     // Day 1
     Intro.Hello();
 
-    // Day2
+    // Day 2
     Basics.VariableDemo();
 
-    // Day3
+    // Day 3
     FlowControlExample.Run();
+
+    // Day 4
+    int a = 10;
+    int b = 20;
+    int sum = Calculator.Add(a, b);
+    int product = Calculator.Multiply(a, b);
+    Console.WriteLine($"Day 4: The Sum of {a} and {b} is {sum}.");
+    Console.WriteLine($"Day 4: The Product of {a} and {b} is {product}.");
+
+    // Day 5
+    Person person = new Person("Alice", 25);
+    person.DisplayInfo();
+
   }
 }
 
