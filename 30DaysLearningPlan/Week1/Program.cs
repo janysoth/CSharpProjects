@@ -4,6 +4,7 @@ using Day2;
 using Day3;
 using Day4;
 using Day5;
+using Day6;
 
 class Program
 {
@@ -29,6 +30,15 @@ class Program
     // Day 5
     Person person = new Person("Alice", 25);
     person.DisplayInfo();
+
+    // Day 6
+    BankAccount account = new BankAccount("Jonny Vorn Soth", 1000m);
+    account.DisplayInfo();
+
+    account.Deposit(500m);
+    account.Withdraw(4000m);
+
+    account.DisplayInfo();
 
   }
 }
