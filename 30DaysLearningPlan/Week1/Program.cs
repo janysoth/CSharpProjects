@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Day2;
 
 class Program
 {
@@ -8,12 +9,12 @@ class Program
     // 👉 Uncomment the day you want to run:
 
     // Day1();
-    // Day2();
+    Day2();
     // Day3();
     // Day4();
     // Day5();
     // Day6();
-    Day7();
+    // Day7();
   }
 
   // =======================
@@ -37,6 +38,8 @@ class Program
 
     int a = 10, b = 3;
     Console.WriteLine($"a + b = {a + b}, a * b = {a * b}, a % b = {a % b}");
+
+    Basics.PizzaOrderDemo();
   }
 
   // ====================
