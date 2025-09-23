@@ -39,7 +39,7 @@ class Program
     int a = 10, b = 3;
     Console.WriteLine($"a + b = {a + b}, a * b = {a * b}, a % b = {a % b}");
 
-    Basics.PizzaOrderDemo();
+    Basics.PizzaDynamicOrder();
   }
 
   // ====================
