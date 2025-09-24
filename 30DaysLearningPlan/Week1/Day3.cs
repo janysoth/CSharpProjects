@@ -30,11 +30,11 @@ namespace Day3
             ParkDaySwitch();
             break;
           case 4:
-            Console.WriteLine("🎟️ Thanks for visiting the park. Goodbye!");
+            Console.WriteLine("\n 🎟️ Thanks for visiting the park. Goodbye!");
             keepRunning = false;
             break;
           default:
-            Console.WriteLine("❌ Invalid choice. Please pick 1–4.");
+            Console.WriteLine("\n ❌ Invalid choice. Please pick 1–4.");
             break;
         }
 
@@ -49,21 +49,21 @@ namespace Day3
 
       if (number % 2 == 0)
       {
-        Console.WriteLine($"The number {number} is EVEN → 🎢 Roller Coaster Ride!");
+        Console.WriteLine($"\n The number {number} is EVEN → 🎢 Roller Coaster Ride!");
       }
       else
       {
-        Console.WriteLine($"The number {number} is ODD → 🚗 Bumper Cars Ride!");
+        Console.WriteLine($"\n The number {number} is ODD → 🚗 Bumper Cars Ride!");
       }
     } // End of EvenOrOddRide() Method
 
     // Practice 2: For loop
     static void FerrisWheelRides()
     {
-      Console.WriteLine("🎡 Ferris Wheel Ride Count:");
+      Console.WriteLine("\n 🎡 Ferris Wheel Ride Count:");
       for (int i = 1; i <= 5; i++)
       {
-        Console.WriteLine($"Ride #{i} - Wheee!");
+        Console.WriteLine($"\n Ride #{i} - Wheee!");
       }
     } // End of FerrisWheelRides() Method
 
@@ -76,28 +76,28 @@ namespace Day3
       switch (day)
       {
         case 1:
-          Console.WriteLine("Monday → The park is quiet, great for rides!");
+          Console.WriteLine("\n Monday → The park is quiet, great for rides!");
           break;
         case 2:
-          Console.WriteLine("Tuesday → Half-price food day at the park!");
+          Console.WriteLine("\n Tuesday → Half-price food day at the park!");
           break;
         case 3:
-          Console.WriteLine("Wednesday → Midweek fun with fewer crowds!");
+          Console.WriteLine("\n Wednesday → Midweek fun with fewer crowds!");
           break;
         case 4:
-          Console.WriteLine("Thursday → Special parade in the park!");
+          Console.WriteLine("\n Thursday → Special parade in the park!");
           break;
         case 5:
-          Console.WriteLine("Friday → Fireworks show at night!");
+          Console.WriteLine("\n Friday → Fireworks show at night!");
           break;
         case 6:
-          Console.WriteLine("Saturday → The busiest but most exciting day!");
+          Console.WriteLine("\n Saturday → The busiest but most exciting day!");
           break;
         case 7:
-          Console.WriteLine("Sunday → Relax with shows and family fun!");
+          Console.WriteLine("\n Sunday → Relax with shows and family fun!");
           break;
         default:
-          Console.WriteLine("Invalid ticket! Please choose 1–7.");
+          Console.WriteLine("\n Invalid ticket! Please choose 1–7.");
           break;
       }
     } // End of ParkDaySwitch() Method
