@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Day2;
+using Day3;
 
 class Program
 {
@@ -9,8 +10,8 @@ class Program
     // 👉 Uncomment the day you want to run:
 
     // Day1();
-    Day2();
-    // Day3();
+    // Day2();
+    Day3();
     // Day4();
     // Day5();
     // Day6();
@@ -47,32 +48,35 @@ class Program
   // ====================
   static void Day3()
   {
-    Console.Write("Enter a number: ");
-    int number = int.Parse(Console.ReadLine()!);
+    // Console.Write("Enter a number: ");
+    // int number = int.Parse(Console.ReadLine()!);
 
-    if (number % 2 == 0)
-      Console.WriteLine("Even number");
-    else
-      Console.WriteLine("Odd number");
+    // if (number % 2 == 0)
+    //   Console.WriteLine("Even number");
+    // else
+    //   Console.WriteLine("Odd number");
 
-    Console.WriteLine("Numbers from 1 to 5:");
-    for (int i = 1; i <= 5; i++)
-      Console.WriteLine(i);
+    // Console.WriteLine("Numbers from 1 to 5:");
+    // for (int i = 1; i <= 5; i++)
+    //   Console.WriteLine(i);
 
-    Console.Write("Enter day number (1-7): ");
-    int day = int.Parse(Console.ReadLine()!);
+    // Console.Write("Enter day number (1-7): ");
+    // int day = int.Parse(Console.ReadLine()!);
 
-    switch (day)
-    {
-      case 1: Console.WriteLine("Monday"); break;
-      case 2: Console.WriteLine("Tuesday"); break;
-      case 3: Console.WriteLine("Wednesday"); break;
-      case 4: Console.WriteLine("Thursday"); break;
-      case 5: Console.WriteLine("Friday"); break;
-      case 6: Console.WriteLine("Saturday"); break;
-      case 7: Console.WriteLine("Sunday"); break;
-      default: Console.WriteLine("Invalid day"); break;
-    }
+    // switch (day)
+    // {
+    //   case 1: Console.WriteLine("Monday"); break;
+    //   case 2: Console.WriteLine("Tuesday"); break;
+    //   case 3: Console.WriteLine("Wednesday"); break;
+    //   case 4: Console.WriteLine("Thursday"); break;
+    //   case 5: Console.WriteLine("Friday"); break;
+    //   case 6: Console.WriteLine("Saturday"); break;
+    //   case 7: Console.WriteLine("Sunday"); break;
+    //   default: Console.WriteLine("Invalid day"); break;
+    // }
+
+    FlowControlExample.Run();
+
   }
 
   // ===========================
