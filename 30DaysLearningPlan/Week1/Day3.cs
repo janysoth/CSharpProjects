@@ -39,7 +39,8 @@ namespace Day3
         }
 
       }
-    }
+    } // End of Run() Method
+
     // Practice 1: Even or Odd
     static void EvenOrOddRide()
     {
@@ -54,7 +55,7 @@ namespace Day3
       {
         Console.WriteLine($"The number {number} is ODD → 🚗 Bumper Cars Ride!");
       }
-    }
+    } // End of EvenOrOddRide() Method
 
     // Practice 2: For loop
     static void FerrisWheelRides()
@@ -64,7 +65,7 @@ namespace Day3
       {
         Console.WriteLine($"Ride #{i} - Wheee!");
       }
-    }
+    } // End of FerrisWheelRides() Method
 
     // Practice 3: Switch
     static void ParkDaySwitch()
@@ -99,7 +100,8 @@ namespace Day3
           Console.WriteLine("Invalid ticket! Please choose 1–7.");
           break;
       }
-    }
-  }
+    } // End of ParkDaySwitch() Method
+
+  } // End of FlowControlExample Class
 }
 
