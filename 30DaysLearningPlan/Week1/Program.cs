@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Day2;
 using Day3;
+using Day4;
 
 class Program
 {
@@ -11,8 +12,8 @@ class Program
 
     // Day1();
     // Day2();
-    Day3();
-    // Day4();
+    // Day3();
+    Day4();
     // Day5();
     // Day6();
     // Day7();
@@ -84,19 +85,38 @@ class Program
   // ===========================
   static void Day4()
   {
-    Console.WriteLine(AddNumbers(5, 10));
-    Greet("Jonny");
+    // Console.WriteLine(AddNumbers(5, 10));
+    // Greet("Jonny");
+
+    // Use static methods
+    KitchenTools.PreheatOven();
+    KitchenTools.WashVegetables("Carrots");
+
+    // Create chefs (instances)
+    Chef Manikka = new Chef("Manikka");
+    Chef Samantta = new Chef("Samantta");
+    Chef Jaccika = new Chef("Jaccika");
+
+    // Call instance methods with arguments
+    Manikka.CookDish("Pasta", "Tomato Sauce");
+    Samantta.CookDish("Fried Rice", "Eggs");
+    Jaccika.CookDish("Pizza", "Pepperoni");
+
+    // Call instance method with return value
+    int pastaCalories = Manikka.CookAndCountCalories("Pasta");
+    Console.WriteLine($"Pasta has {pastaCalories} calories.");
+
   }
 
-  static int AddNumbers(int x, int y)
-  {
-    return x + y;
-  }
+  // static int AddNumbers(int x, int y)
+  // {
+  //   return x + y;
+  // }
 
-  static void Greet(string name)
-  {
-    Console.WriteLine($"Hello, {name}!");
-  }
+  // static void Greet(string name)
+  // {
+  //   Console.WriteLine($"Hello, {name}!");
+  // }
 
   // =========================
   // Day 5 – Classes & Objects
