@@ -58,4 +58,44 @@ namespace Day5
             Console.WriteLine($"Day 5: Name: {Name}, Age: {Age}");
         }
     }
+
+    // 🏠 Blueprint for a House
+    public class House
+    {
+        // Fields (hidden details - wiring, plumbing, etc.)
+        private string paintColor;
+        private int numberOfRooms;
+
+        // Property (safe access - like windows/doors)
+        public string PaintColor
+        {
+            get { return paintColor; }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                    paintColor = value;
+            }
+        }
+
+        // Read-only property (ont get - like asking how many rooms)
+        public int NumberOfRooms
+        {
+            get { return numberOfRooms; }
+
+        }
+
+        // Constructor (how the house is built)
+        public House(string color, int rooms)
+        {
+            paintColor = color;
+            numberOfRooms = rooms;
+        }
+
+        // Method (action you can do with the house)
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"🏠 This house has {numberOfRooms} rooms and is painted {paintColor}.");
+        }
+    }
+
 }

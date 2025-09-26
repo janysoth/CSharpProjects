@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Day2;
 using Day3;
 using Day4;
+using Day5;
 
 class Program
 {
@@ -13,8 +14,8 @@ class Program
     // Day1();
     // Day2();
     // Day3();
-    Day4();
-    // Day5();
+    // Day4();
+    Day5();
     // Day6();
     // Day7();
   }
@@ -123,11 +124,25 @@ class Program
   // =========================
   static void Day5()
   {
-    Person person1 = new Person("Jonny", 25);
-    person1.DisplayInfo();
+    // Person person1 = new Person("Jonny", 25);
+    // person1.DisplayInfo();
 
-    Person person2 = new Person("Alice", 30);
-    person2.DisplayInfo();
+    // Person person2 = new Person("Alice", 30);
+    // person2.DisplayInfo();
+
+    House house1 = new House("Red", 5);
+    House house2 = new House("Blue", 3);
+
+    // Access info through methods and properties
+    house1.DisplayInfo();
+    house2.DisplayInfo();
+
+    // Change paint color using property (encapsulation in action)
+    house1.PaintColor = "Green";
+    Console.WriteLine($"House1 is now painted {house1.PaintColor}");
+
+    // numberOfRooms cannot be directly changed (protected by encapsulation)
+    // house1.NumberOfRooms = 10; ❌ This would not compile
   }
 
   class Person
