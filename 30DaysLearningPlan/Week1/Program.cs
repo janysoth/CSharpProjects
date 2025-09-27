@@ -4,6 +4,7 @@ using Day2;
 using Day3;
 using Day4;
 using Day5;
+using Day6;
 
 class Program
 {
@@ -15,8 +16,8 @@ class Program
     // Day2();
     // Day3();
     // Day4();
-    Day5();
-    // Day6();
+    // Day5();
+    Day6();
     // Day7();
   }
 
@@ -167,11 +168,26 @@ class Program
   // ==============================
   static void Day6()
   {
-    BankAccount account = new BankAccount(100);
-    account.Deposit(50);
-    Console.WriteLine($"Balance: {account.Balance}");
-    account.Withdraw(200); // Should show error
-    Console.WriteLine($"Balance: {account.Balance}");
+    // BankAccount account = new BankAccount(100);
+    // account.Deposit(50);
+    // Console.WriteLine($"Balance: {account.Balance}");
+    // account.Withdraw(200); // Should show error
+    // Console.WriteLine($"Balance: {account.Balance}");
+
+    Car myCar = new Car();
+
+    // 🚗 Using methods
+    myCar.StartEngine();
+    myCar.Accelerate();
+    myCar.Accelerate();
+    myCar.Brake();
+
+    Console.WriteLine($"Current Fuel: {myCar.FuelLevel}");
+
+    // Refueling
+    myCar.Refuel(100);
+    myCar.Refuel(30);
+    Console.WriteLine($"After refueling, Fuel: {myCar.FuelLevel}%");
   }
 
   class BankAccount

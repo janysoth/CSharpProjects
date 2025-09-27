@@ -235,23 +235,96 @@ namespace Day6
             }
         }
 
-    public void Withdraw(decimal amount)
-    {
-      if (amount > 0 && amount <= Balance)
-      {
-        Balance -= amount;
-        Console.WriteLine($"Withdrew {amount:C}. Balance: {Balance:C}");
-      }
-      else
-      {
-        Console.WriteLine($"Insufficient funds! You only have {Balance:C}.");
-      }
+        public void Withdraw(decimal amount)
+        {
+            if (amount > 0 && amount <= Balance)
+            {
+                Balance -= amount;
+                Console.WriteLine($"Withdrew {amount:C}. Balance: {Balance:C}");
+            }
+            else
+            {
+                Console.WriteLine($"Insufficient funds! You only have {Balance:C}.");
+            }
         }
 
         public void DisplayInfo()
         {
             Console.WriteLine($"Account Holder: {AccountHolder}");
             Console.WriteLine($"Balance: {Balance:C}.");
+        }
+    }
+
+    public class Car
+    {
+        // 🔒 Private field (hidden, like the engine inside the hood)
+        private int _speed;
+
+        // Another example: Fuel Level (read-only property, like fuel gauge)
+        private int _fuelLevel = 50;    // hidden inside the car
+
+        // 🛠️ Public property with getter & setter (dashboard control)
+        public int Speed
+        {
+            get { return _speed; }  // Getter -> like the speedometer
+            set
+            {
+                if (value >= 0)  // Safety check
+                {
+                    _speed = value; // Setter -> like pressing the gas pedal
+                }
+            }
+        }
+
+        // FuelLevel (read-only, like the fuel gauge)
+        public int FuelLevel
+        {
+            get { return _fuelLevel; }  // only getter (can read, not set directly)
+        }
+
+        // 🚦 Methods (car actions)
+        public void StartEngine()
+        {
+            Console.WriteLine("Engine started.");
+        }
+
+        public void Accelerate()
+        {
+            if (_fuelLevel <= 0)
+            {
+                Console.WriteLine("Cannot accelerate. out of fuel!");
+                return;
+            }
+
+            Speed += 10;
+            _fuelLevel -= 1;    // using a bit of fuel each acceleration
+            Console.WriteLine($"Accelerated. Speed: {Speed} mph. \n Fuel: {_fuelLevel}%");
+        }
+
+        public void Brake()
+        {
+            Speed -= 10;
+            if (Speed < 0) Speed = 0;
+            Console.WriteLine($"Car accelerated. Current speed: {Speed} mph.");
+        }
+
+        public void Honk()
+        {
+            Console.WriteLine("Beep! Beep!");
+        }
+
+        // 🛢️ Encapsulation in action: Refuel safely
+        public void Refuel(int amount)
+        {
+            if (amount <= 0)
+            {
+                Console.WriteLine("Invalid fuel amount.");
+                return;
+            }
+
+            _fuelLevel += amount;
+            if (_fuelLevel > 100) _fuelLevel = 100;
+            Console.WriteLine($"Refueled. Fuel level: {_fuelLevel}%");
         }
     }
 }
