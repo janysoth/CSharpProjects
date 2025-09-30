@@ -1,0 +1,15 @@
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/bin/Debug/net9.0/Week1MovieManager
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/bin/Debug/net9.0/Week1MovieManager.deps.json
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/bin/Debug/net9.0/Week1MovieManager.runtimeconfig.json
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/bin/Debug/net9.0/Week1MovieManager.dll
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/bin/Debug/net9.0/Week1MovieManager.pdb
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/obj/Debug/net9.0/Week1MovieManager.GeneratedMSBuildEditorConfig.editorconfig
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/obj/Debug/net9.0/Week1MovieManager.AssemblyInfoInputs.cache
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/obj/Debug/net9.0/Week1MovieManager.AssemblyInfo.cs
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/obj/Debug/net9.0/Week1MovieManager.csproj.CoreCompileInputs.cache
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/obj/Debug/net9.0/Week1MovieManager.sourcelink.json
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/obj/Debug/net9.0/Week1MovieManager.dll
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/obj/Debug/net9.0/refint/Week1MovieManager.dll
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/obj/Debug/net9.0/Week1MovieManager.pdb
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/obj/Debug/net9.0/Week1MovieManager.genruntimeconfig.cache
+/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/MiniProjects/Week1MovieManager/obj/Debug/net9.0/ref/Week1MovieManager.dll
