@@ -1,7 +1,7 @@
 ﻿using System;
-using MovieManagerApp.Services;
+using Week1MovieManager.Services;
 
-namespace MovieManagerApp
+namespace Week1MovieManager
 {
   class Program
   {

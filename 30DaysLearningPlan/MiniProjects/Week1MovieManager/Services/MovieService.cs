@@ -5,20 +5,20 @@ using System.Linq;
 using System.Text.Json;
 using Week1MovieManager.Models;
 
-namespace MovieManagerApp.Services
+namespace Week1MovieManager.Services
 {
   public class MovieService
   {
     private const string DataFile = "movies.json";
     private List<Movie> movies;
 
-    // Constructor of the MovieService Class
+    // Constructor for the MovieService class
     public MovieService()
     {
       movies = LoadMovies();
     }
 
-    // AddMovie Method
+    // Add a new movie with Title, Year, and Rating
     public void AddMovie()
     {
       Console.Write("Enter movie title: ");
@@ -26,40 +26,54 @@ namespace MovieManagerApp.Services
 
       if (string.IsNullOrWhiteSpace(title))
       {
-        Console.WriteLine("Title cannot be empty.\n");
+        Console.WriteLine("❌ Title cannot be empty.\n");
         return;
       }
 
       if (movies.Any(m => string.Equals(m.Title, title, StringComparison.OrdinalIgnoreCase)))
       {
-        Console.WriteLine($"\"{title}\" is already in your list.\n");
+        Console.WriteLine($"⚠️ \"{title}\" is already in your list.\n");
         return;
       }
 
-      var movie = new Movie { Title = title };
+      Console.Write("Enter release year: ");
+      if (!int.TryParse(Console.ReadLine(), out int year) || year < 1888 || year > DateTime.Now.Year + 1)
+      {
+        Console.WriteLine("❌ Invalid year.\n");
+        return;
+      }
+
+      Console.Write("Enter rating (0.0 - 10.0): ");
+      if (!double.TryParse(Console.ReadLine(), out double rating) || rating < 0 || rating > 10)
+      {
+        Console.WriteLine("❌ Rating must be between 0 and 10.\n");
+        return;
+      }
+
+      var movie = new Movie { Title = title, Year = year, Rating = rating };
       movies.Add(movie);
       SaveMovies();
-      Console.WriteLine($"✅ \"{movie.Title}\" added to your list!\n");
+      Console.WriteLine($"✅ \"{movie.Title}\" ({movie.Year}) with rating {movie.Rating}/10 added!\n");
     }
 
-    // ListMovies Method
+    // Show all movies
     public void ListMovies()
     {
       if (movies.Count == 0)
       {
-        Console.WriteLine("No movies added yet.\n");
+        Console.WriteLine("📭 No movies added yet.\n");
         return;
       }
 
-      Console.WriteLine("\nYour Movies:");
+      Console.WriteLine("\n🎬 Your Movies:");
       for (int i = 0; i < movies.Count; i++)
       {
-        Console.WriteLine($"{i + 1}. {movies[i].Title}");
+        Console.WriteLine($"{i + 1}. {movies[i].Title} ({movies[i].Year}) - ⭐ {movies[i].Rating}/10");
       }
       Console.WriteLine();
     }
 
-    // SearchMovies Method
+    // Search movies by title
     public void SearchMovies()
     {
       Console.Write("Search for: ");
@@ -67,7 +81,7 @@ namespace MovieManagerApp.Services
 
       if (string.IsNullOrWhiteSpace(term))
       {
-        Console.WriteLine("Search term cannot be empty.\n");
+        Console.WriteLine("❌ Search term cannot be empty.\n");
         return;
       }
 
@@ -77,25 +91,25 @@ namespace MovieManagerApp.Services
 
       if (matches.Count == 0)
       {
-        Console.WriteLine("No matches.\n");
+        Console.WriteLine("🔎 No matches.\n");
       }
       else
       {
-        Console.WriteLine("\nFound:");
+        Console.WriteLine("\n🔎 Found:");
         foreach (var m in matches)
         {
-          Console.WriteLine($"- {m.Title}");
+          Console.WriteLine($"- {m.Title} ({m.Year}) - ⭐ {m.Rating}/10");
         }
         Console.WriteLine();
       }
     }
 
-    // DeleteMovie Method
+    // Delete a movie by number
     public void DeleteMovie()
     {
       if (movies.Count == 0)
       {
-        Console.WriteLine("No movies to delete.\n");
+        Console.WriteLine("📭 No movies to delete.\n");
         return;
       }
 
@@ -114,25 +128,24 @@ namespace MovieManagerApp.Services
         }
         else
         {
-          Console.WriteLine("Invalid number.\n");
+          Console.WriteLine("❌ Invalid number.\n");
         }
       }
       else
       {
-        Console.WriteLine("Please enter a valid number.\n");
+        Console.WriteLine("❌ Please enter a valid number.\n");
       }
     }
 
-    // ExitApp Method. 
+    // Exit and save
     public void ExitApp()
     {
-      Console.WriteLine("Saving and exiting...");
+      Console.WriteLine("💾 Saving and exiting...");
       SaveMovies();
-      Console.WriteLine("Goodbye!\n");
+      Console.WriteLine("👋 Goodbye!");
     }
 
-    // LoadMovies Method
-    // This method will run automatically (constructor)
+    // Load movies from JSON file
     private List<Movie> LoadMovies()
     {
       try
@@ -146,13 +159,13 @@ namespace MovieManagerApp.Services
       }
       catch (Exception ex)
       {
-        Console.WriteLine($"Warning: couldn't load saved movies: {ex.Message}");
+        Console.WriteLine($"⚠️ Couldn't load saved movies: {ex.Message}");
       }
 
       return new List<Movie>();
     }
 
-    // SaveMovies Method
+    // Save movies to JSON file
     private void SaveMovies()
     {
       try
@@ -162,7 +175,7 @@ namespace MovieManagerApp.Services
       }
       catch (Exception ex)
       {
-        Console.WriteLine($"Error saving movies: {ex.Message}");
+        Console.WriteLine($"❌ Error saving movies: {ex.Message}");
       }
     }
   }
