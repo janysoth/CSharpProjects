@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Week1MovieManager")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2d1a1df14e4228ecfc9a0773b291667bf59185fd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+068f9fb25574fd07575f1e1f25c8cca37c3c1855")]
 [assembly: System.Reflection.AssemblyProductAttribute("Week1MovieManager")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Week1MovieManager")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

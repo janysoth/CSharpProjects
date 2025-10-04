@@ -56,6 +56,85 @@ namespace Week1MovieManager.Services
       Console.WriteLine($"✅ \"{movie.Title}\" ({movie.Year}) with rating {movie.Rating}/10 added!\n");
     }
 
+    // Edit the Movie Details
+    public void EditMovie()
+    {
+      if (movies.Count == 0)
+      {
+        Console.WriteLine("📭 No movies to edit.\n");
+        return;
+      }
+
+      ListMovies();
+
+      Console.Write("Enter the number of the movie to edit: ");
+      string input = Console.ReadLine()?.Trim() ?? "";
+
+      if (int.TryParse(input, out int index))
+      {
+        if (index >= 1 && index <= movies.Count)
+        {
+          var movie = movies[index - 1];
+          Console.WriteLine($"\nEditing \"{movie.Title}\" ({movie.Year}) - ⭐ {movie.Rating}/10");
+
+          // Ask for a new title
+          Console.Write("Enter the new title (leave blank to keep current): ");
+          string newTitle = Console.ReadLine()?.Trim() ?? "";
+
+          if (!string.IsNullOrWhiteSpace(newTitle))
+          {
+            movie.Title = newTitle;
+          }
+
+          // Ask for the new year
+          Console.Write("Enter the new release year (leave blank to keep current): ");
+          string yearInput = Console.ReadLine()?.Trim() ?? "";
+
+          if (!string.IsNullOrWhiteSpace(yearInput) && int.TryParse(yearInput, out int newYear))
+          {
+            if (newYear >= 1888 && newYear <= DateTime.Now.Year + 1)
+            {
+              movie.Year = newYear;
+            }
+            else
+            {
+              Console.WriteLine("⚠️ Invalid year, keeping old value.");
+            }
+          }
+
+          // Ask for new rating
+          Console.Write("Enter new rating (0.0 - 10.0, leave blank to keep current): ");
+          string ratingInput = Console.ReadLine()?.Trim() ?? "";
+          if (!string.IsNullOrWhiteSpace(ratingInput) && double.TryParse(ratingInput, out double newRating))
+          {
+            if (newRating >= 0 && newRating <= 10)
+            {
+              movie.Rating = newRating;
+            }
+            else
+            {
+              Console.WriteLine("⚠️ Invalid rating, keeping old value.");
+            }
+          }
+
+          SaveMovies();
+          Console.WriteLine($"✅ \"{movie.Title}\" was updated!\n");
+
+        }
+
+        else
+        {
+          Console.WriteLine("❌ Invalid number.\n");
+        }
+      }
+
+      else
+      {
+        Console.WriteLine("❌ Please enter a valid number.\n");
+      }
+
+    }
+
     // Show all movies
     public void ListMovies()
     {
@@ -142,7 +221,7 @@ namespace Week1MovieManager.Services
     {
       Console.WriteLine("💾 Saving and exiting...");
       SaveMovies();
-      Console.WriteLine("👋 Goodbye!");
+      Console.WriteLine("👋 Goodbye!\n");
     }
 
     // Load movies from JSON file

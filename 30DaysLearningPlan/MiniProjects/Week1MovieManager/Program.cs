@@ -20,15 +20,18 @@ namespace Week1MovieManager
             movieService.AddMovie();
             break;
           case "2":
-            movieService.ListMovies();
+            movieService.EditMovie();
             break;
           case "3":
-            movieService.SearchMovies();
+            movieService.ListMovies();
             break;
           case "4":
-            movieService.DeleteMovie();
+            movieService.SearchMovies();
             break;
           case "5":
+            movieService.DeleteMovie();
+            break;
+          case "6":
             movieService.ExitApp();
             return;
           default:
@@ -44,10 +47,11 @@ namespace Week1MovieManager
       Console.WriteLine("Movie Manager 🎬");
       Console.WriteLine("---------------");
       Console.WriteLine("1. Add Movie");
-      Console.WriteLine("2. List Movies");
-      Console.WriteLine("3. Search Movies");
-      Console.WriteLine("4. Delete Movie");
-      Console.WriteLine("5. Exit");
+      Console.WriteLine("2. Edit Movie");
+      Console.WriteLine("3. List Movies");
+      Console.WriteLine("4. Search Movies");
+      Console.WriteLine("5. Delete Movie");
+      Console.WriteLine("6. Exit");
       Console.Write("Choose an option: ");
     }
   }
