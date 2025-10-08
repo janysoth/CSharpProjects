@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "N9lxjHt13m0=",
+  "dgSpecHash": "8184KbV6bYk=",
   "success": true,
-  "projectFilePath": "/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/Week2/MovieReviewApi/MovieReviewApi.csproj",
+  "projectFilePath": "/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week2/MovieReviewApi/MovieReviewApi.csproj",
   "expectedPackageFiles": [
     "/Users/jonnyvornsoth/.nuget/packages/microsoft.aspnetcore.openapi/9.0.8/microsoft.aspnetcore.openapi.9.0.8.nupkg.sha512",
     "/Users/jonnyvornsoth/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
