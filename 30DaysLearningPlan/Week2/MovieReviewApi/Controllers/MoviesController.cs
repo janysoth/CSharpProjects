@@ -32,5 +32,18 @@ namespace MovieReviewApi.Controllers
 
       return Ok(movies[id]);
     }
+
+    // ✅ Task 5: Custom route (optional)
+    [HttpGet("top-rated")]
+    public IActionResult GetTopRatedMovies()
+    {
+      var topMovies = new[]
+      {
+                new { Title = "The Dark Knight", Rating = 9.0 },
+                new { Title = "Inception", Rating = 8.8 }
+            };
+
+      return Ok(topMovies);
+    }
   }
 }
