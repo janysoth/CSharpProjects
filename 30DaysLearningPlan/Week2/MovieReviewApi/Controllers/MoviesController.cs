@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using MovieReviewApi.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MovieReviewApi.Controllers
 {
@@ -7,43 +9,32 @@ namespace MovieReviewApi.Controllers
   [ApiController]
   public class MoviesController : ControllerBase
   {
-    // ✅ Task 1 & 4: Return all movies
-    [HttpGet]
-    public IActionResult GetAllMovies()
-    {
-      var movies = new[]
-      {
-        new { Id = 1, Title = "Inception", Year = 2010, Rating = 8.8 },
-        new { Id = 2, Title = "The Dark Knight", Year = 2008, Rating = 9.0 },
-        new { Id = 3, Title = "Interstellar", Year = 2014, Rating = 8.6 }
-      };
+    // In-memory movie list for demo
+    private static List<Movie> movies = new List<Movie>
+        {
+            new Movie { Id = 1, Title = "Inception", Genre = "Sci-Fi", Year = 2010, Rating = 8.8 },
+            new Movie { Id = 2, Title = "The Dark Knight", Genre = "Action", Year = 2008, Rating = 9.0 }
+        };
 
+    // ✅ GET: api/movies
+    [HttpGet]
+    public ActionResult<IEnumerable<Movie>> GetMovies()
+    {
       return Ok(movies);
     }
 
-    // ✅ Task 3: Return a single movie by ID
-    [HttpGet("{id}")]
-    public IActionResult GetMovieById(int id)
+    // ✅ POST: api/movies/add-movie
+    [HttpPost("add-movie")]
+    public ActionResult<Movie> AddMovie([FromBody] Movie newMovie)
     {
-      var movies = new List<string> { "Inception", "The Dark Knight", "Interstellar" };
+      // Auto-generate a new ID
+      newMovie.Id = movies.Max(m => m.Id) + 1;
 
-      if (id < 0 || id >= movies.Count)
-        return NotFound("Movie not found.");
+      // Add to list
+      movies.Add(newMovie);
 
-      return Ok(movies[id]);
-    }
-
-    // ✅ Task 5: Custom route (optional)
-    [HttpGet("top-rated")]
-    public IActionResult GetTopRatedMovies()
-    {
-      var topMovies = new[]
-      {
-                new { Title = "The Dark Knight", Rating = 9.0 },
-                new { Title = "Inception", Rating = 8.8 }
-            };
-
-      return Ok(topMovies);
+      // Return a "201 Created" response
+      return CreatedAtAction(nameof(GetMovies), new { id = newMovie.Id }, newMovie);
     }
   }
 }
