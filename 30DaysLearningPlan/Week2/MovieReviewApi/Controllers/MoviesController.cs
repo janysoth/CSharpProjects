@@ -17,7 +17,7 @@ namespace MovieReviewApi.Controllers
         };
 
     // ✅ GET: api/movies
-    [HttpGet]
+    [HttpGet("get-all-movies")]
     public ActionResult<IEnumerable<Movie>> GetMovies()
     {
       return Ok(movies);
@@ -58,5 +58,43 @@ namespace MovieReviewApi.Controllers
       // Return a "201 Created" response with a Location header to the single GET endpoint
       return CreatedAtAction(nameof(GetMovie), new { id = newMovie.Id }, newMovie);
     }
+
+    // ✅ PUT: api/movies/update-movie/{id}
+    [HttpPut("update-movie/{id}")]
+    public ActionResult<Movie> UpdateMovie(int id, [FromBody] Movie updateMovie)
+    {
+      if (updateMovie == null)
+        return BadRequest(new { message = "Movie data is required." });
+
+      // Find the existing movie
+      var existingMovie = movies.FirstOrDefault(m => m.Id == id);
+
+      if (existingMovie == null)
+        return NotFound(new { message = $"Movie with ID {id} not found." });
+
+      // Update fields
+      existingMovie.Title = updateMovie.Title;
+      existingMovie.Genre = updateMovie.Genre;
+      existingMovie.Year = updateMovie.Year;
+      existingMovie.Rating = updateMovie.Rating;
+
+      return Ok(existingMovie);
+    }
+
+    // ✅ DELETE: api/movies/delete-movie/{id}
+    [HttpDelete("delete-movie/{id}")]
+    public ActionResult DeleteMovie(int id)
+    {
+      var movie = movies.FirstOrDefault(m => m.Id == id);
+
+      if (movie == null)
+        return NotFound(new { message = $"Movie with ID {id} not found." });
+
+      movies.Remove(movie);
+
+      // ✅ Return 200 OK with confirmation message
+      return Ok(new { message = $"Movie {movie.Title} has been deleted successfully." });
+    }
+
   }
 }
