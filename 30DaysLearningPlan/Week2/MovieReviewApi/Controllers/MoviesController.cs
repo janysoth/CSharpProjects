@@ -44,9 +44,10 @@ namespace MovieReviewApi.Controllers
     [HttpPost("add-movie")]
     public ActionResult<Movie> AddMovie([FromBody] Movie newMovie)
     {
-      if (newMovie == null)
+      // ✅ Validate model before proceeding
+      if (!ModelState.IsValid)
       {
-        return BadRequest(new { message = "Movie data is required." });
+        return BadRequest(ModelState);
       }
 
       // Auto-generate a new ID (safe even if list is empty)
@@ -63,14 +64,14 @@ namespace MovieReviewApi.Controllers
     [HttpPut("update-movie/{id}")]
     public ActionResult<Movie> UpdateMovie(int id, [FromBody] Movie updateMovie)
     {
-      if (updateMovie == null)
-        return BadRequest(new { message = "Movie data is required." });
-
       // Find the existing movie
       var existingMovie = movies.FirstOrDefault(m => m.Id == id);
 
       if (existingMovie == null)
         return NotFound(new { message = $"Movie with ID {id} not found." });
+
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
 
       // Update fields
       existingMovie.Title = updateMovie.Title;
@@ -78,7 +79,11 @@ namespace MovieReviewApi.Controllers
       existingMovie.Year = updateMovie.Year;
       existingMovie.Rating = updateMovie.Rating;
 
-      return Ok(existingMovie);
+      return Ok(new
+      {
+        message = $"{existingMovie.Title} updated successfully.",
+        existingMovie
+      });
     }
 
     // ✅ DELETE: api/movies/delete-movie/{id}
