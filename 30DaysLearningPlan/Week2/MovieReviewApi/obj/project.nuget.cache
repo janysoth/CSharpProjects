@@ -1,11 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "8184KbV6bYk=",
+  "dgSpecHash": "gT99G7AC/HA=",
   "success": true,
   "projectFilePath": "/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week2/MovieReviewApi/MovieReviewApi.csproj",
   "expectedPackageFiles": [
+    "/Users/jonnyvornsoth/.nuget/packages/microsoft.aspnetcore.jsonpatch/9.0.10/microsoft.aspnetcore.jsonpatch.9.0.10.nupkg.sha512",
+    "/Users/jonnyvornsoth/.nuget/packages/microsoft.aspnetcore.mvc.newtonsoftjson/9.0.10/microsoft.aspnetcore.mvc.newtonsoftjson.9.0.10.nupkg.sha512",
     "/Users/jonnyvornsoth/.nuget/packages/microsoft.aspnetcore.openapi/9.0.8/microsoft.aspnetcore.openapi.9.0.8.nupkg.sha512",
-    "/Users/jonnyvornsoth/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
+    "/Users/jonnyvornsoth/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
+    "/Users/jonnyvornsoth/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512",
+    "/Users/jonnyvornsoth/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
+    "/Users/jonnyvornsoth/.nuget/packages/newtonsoft.json.bson/1.0.2/newtonsoft.json.bson.1.0.2.nupkg.sha512"
   ],
   "logs": []
 }

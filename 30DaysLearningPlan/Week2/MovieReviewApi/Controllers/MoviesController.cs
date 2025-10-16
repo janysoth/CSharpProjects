@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using MovieReviewApi.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using System.Collections.Generic;
 using System.Linq;
+
+using MovieReviewApi.Models;
 
 namespace MovieReviewApi.Controllers
 {
@@ -61,29 +63,22 @@ namespace MovieReviewApi.Controllers
     }
 
     // ✅ PUT: api/movies/update-movie/{id}
-    [HttpPut("update-movie/{id}")]
-    public ActionResult<Movie> UpdateMovie(int id, [FromBody] Movie updateMovie)
+    [HttpPatch("update-movie/{id}")]
+    public ActionResult<Movie> UpdateMovie(int id, [FromBody] JsonPatchDocument<Movie> patchDoc)
     {
-      // Find the existing movie
-      var existingMovie = movies.FirstOrDefault(m => m.Id == id);
-
-      if (existingMovie == null)
+      var movie = movies.FirstOrDefault(m => m.Id == id);
+      if (movie == null)
         return NotFound(new { message = $"Movie with ID {id} not found." });
+
+      if (patchDoc == null)
+        return BadRequest();
+
+      patchDoc.ApplyTo(movie, ModelState);
 
       if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      // Update fields
-      existingMovie.Title = updateMovie.Title;
-      existingMovie.Genre = updateMovie.Genre;
-      existingMovie.Year = updateMovie.Year;
-      existingMovie.Rating = updateMovie.Rating;
-
-      return Ok(new
-      {
-        message = $"{existingMovie.Title} updated successfully.",
-        existingMovie
-      });
+      return Ok(new { message = $"{movie.Title} updated successfully.", movie });
     }
 
     // ✅ DELETE: api/movies/delete-movie/{id}
