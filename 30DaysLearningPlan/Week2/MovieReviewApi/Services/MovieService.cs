@@ -44,13 +44,13 @@ namespace MovieReviewApi.Services
       return true;
     }
 
-    public bool DeleteMovie(int id)
+    public Movie? DeleteMovie(int id)
     {
       var movie = _movies.FirstOrDefault(m => m.Id == id);
-      if (movie == null) return false;
+      if (movie == null) return null;
 
       _movies.Remove(movie);
-      return true;
+      return movie;
     }
   }
 }

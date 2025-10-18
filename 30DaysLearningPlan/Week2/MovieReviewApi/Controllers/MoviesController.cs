@@ -179,11 +179,12 @@ namespace MovieReviewApi.Controllers
     [HttpDelete("delete-movie/{id}")]
     public ActionResult DeleteMovie(int id)
     {
-      bool success = _movieService.DeleteMovie(id);
-      if (!success)
+      var deleteMovie = _movieService.DeleteMovie(id);
+
+      if (deleteMovie == null)
         return NotFound(new { message = $"Movie with ID {id} not found." });
 
-      return Ok(new { message = $"Movie with ID {id} deleted successfully." });
+      return Ok(new { message = $"{deleteMovie.Title} has been deleted successfully." });
     }
   }
 }

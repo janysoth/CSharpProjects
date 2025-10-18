@@ -11,6 +11,6 @@ namespace MovieReviewApi.Services
     void AddMovie(Movie movie);
     bool UpdateMovie(int id, Movie updatedMovie);                  // Full update
     bool PatchMovie(int id, JsonPatchDocument<Movie> patchDoc);    // Partial update
-    bool DeleteMovie(int id);
+    Movie? DeleteMovie(int id);
   }
 }

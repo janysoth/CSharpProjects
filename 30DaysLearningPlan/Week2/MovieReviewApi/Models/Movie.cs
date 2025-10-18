@@ -4,7 +4,6 @@ namespace MovieReviewApi.Models
 {
   public class Movie
   {
-
     public int Id { get; set; }        // Unique identifier
 
     [Required(ErrorMessage = "Title is required.")]
