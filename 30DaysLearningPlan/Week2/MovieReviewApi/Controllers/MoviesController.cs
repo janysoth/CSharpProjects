@@ -161,18 +161,34 @@ namespace MovieReviewApi.Controllers
     public ActionResult<Movie> PatchMovie(int id, [FromBody] JsonPatchDocument<Movie> patchDoc)
     {
       if (patchDoc == null)
-        return BadRequest();
+        return BadRequest(new
+        {
+          message = "Invalid update info. Please try again."
+        });
 
       var movie = _movieService.GetMovieById(id);
-      if (movie == null)
-        return NotFound(new { message = $"Movie with ID {id} not found." });
 
+      if (movie == null)
+        return NotFound(new
+        {
+          message = $"Movie with ID {id} not found."
+        });
+
+      // Apply patch and capture any model state errors
       patchDoc.ApplyTo(movie, ModelState);
+
+      // ✅ Re-run validation after patching
+      TryValidateModel(movie);
 
       if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      return Ok(new { message = $"{movie.Title} updated successfully.", movie });
+      return Ok(new
+      {
+        message = $"{movie.Title} updated successfully",
+        movie
+      });
+
     }
 
     // DELETE: api/movies/{id}
