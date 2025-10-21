@@ -6,9 +6,9 @@ namespace MovieReviewApi.Services
 {
   public interface IMovieService
   {
-    List<Movie> GetAllMovies();
+    IEnumerable<Movie> GetAllMovies();
     Movie? GetMovieById(int id);
-    void AddMovie(Movie movie);
+    Movie AddMovie(Movie movie);
     bool UpdateMovie(int id, Movie updatedMovie);                  // Full update
     bool PatchMovie(int id, JsonPatchDocument<Movie> patchDoc);    // Partial update
     Movie? DeleteMovie(int id);
