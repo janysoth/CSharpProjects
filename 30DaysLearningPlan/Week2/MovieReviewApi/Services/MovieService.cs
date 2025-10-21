@@ -25,7 +25,7 @@ namespace MovieReviewApi.Services
     // ✅ GET ALL MOVIES
     // Returns the complete movie list
     // =============================================================
-    public List<Movie> GetAllMovies() => _movies;
+    public IEnumerable<Movie> GetAllMovies() => _movies;
 
     // =============================================================
     // ✅ GET MOVIE BY ID
@@ -38,13 +38,15 @@ namespace MovieReviewApi.Services
     // ✅ ADD NEW MOVIE
     // Assigns a unique ID and adds the movie to the list
     // =============================================================
-    public void AddMovie(Movie movie)
+    public Movie AddMovie(Movie movie)
     {
       // Generate a new ID safely even if the list is empty
       int nextId = _movies.Any() ? _movies.Max(m => m.Id) + 1 : 1;
       movie.Id = nextId;
 
       _movies.Add(movie);
+
+      return movie;
     }
 
     // =============================================================
