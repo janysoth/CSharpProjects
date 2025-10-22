@@ -55,7 +55,7 @@ namespace MovieReviewApi.Services
     // =============================================================
     public bool UpdateMovie(int id, Movie updatedMovie)
     {
-      var existingMovie = _movies.FirstOrDefault(m => m.Id == id);
+      var existingMovie = GetMovieById(id);
 
       if (existingMovie == null)
         return false; // Movie not found
@@ -75,7 +75,7 @@ namespace MovieReviewApi.Services
     // =============================================================
     public bool PatchMovie(int id, JsonPatchDocument<Movie> patchDoc)
     {
-      var existingMovie = _movies.FirstOrDefault(m => m.Id == id);
+      var existingMovie = GetMovieById(id);
 
       if (existingMovie == null)
         return false;
@@ -92,7 +92,7 @@ namespace MovieReviewApi.Services
     // =============================================================
     public Movie? DeleteMovie(int id)
     {
-      var existingMovie = _movies.FirstOrDefault(m => m.Id == id);
+      var existingMovie = GetMovieById(id);
 
       if (existingMovie == null)
         return null;
