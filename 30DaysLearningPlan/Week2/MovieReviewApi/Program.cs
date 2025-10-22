@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MovieReviewApi.Services; // ✅ Add this using statement
+using Microsoft.EntityFrameworkCore;
+using MovieReviewApi.Data;
+using Microsoft.OpenApi.Models; // ✅ Required for Swagger
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,16 +11,23 @@ var builder = WebApplication.CreateBuilder(args);
 // 🧩 1️⃣ Add services to the container
 // ----------------------------------------------------------
 
-// Optional: Swagger/OpenAPI (if you used AddOpenApi earlier)
-builder.Services.AddOpenApi();
+// ✅ Add EF Core (SQLite)
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // ✅ Add Controllers with Newtonsoft.Json for JSON Patch support
 builder.Services.AddControllers().AddNewtonsoftJson();
 
-// ✅ Register MovieService for Dependency Injection
-builder.Services.AddSingleton<IMovieService, MovieService>();
-// 📝 Singleton is fine for demo/in-memory data. 
-// For real databases, you’d use AddScoped<>.
+// ✅ Add Swagger/OpenAPI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "MovieReview API",
+        Version = "v1"
+    });
+});
 
 // ----------------------------------------------------------
 // 🧩 2️⃣ Build the app
@@ -30,13 +39,18 @@ var app = builder.Build();
 // ----------------------------------------------------------
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi(); // Enables Swagger/OpenAPI during development
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "MovieReview API V1");
+    });
 }
 
-// Optional HTTPS redirection
 app.UseHttpsRedirection();
 
-// Map all controllers (like MoviesController)
+app.UseAuthorization();
+
+// ✅ Map all controllers (like MoviesController)
 app.MapControllers();
 
 // ----------------------------------------------------------
