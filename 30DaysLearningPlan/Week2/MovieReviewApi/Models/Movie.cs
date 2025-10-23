@@ -8,10 +8,10 @@ namespace MovieReviewApi.Models
 
     [Required(ErrorMessage = "Title is required.")]
     [StringLength(100, ErrorMessage = "Title cannot exceed 100 characters.")]
-    public string? Title { get; set; }  // Movie title
+    public string? Title { get; set; } = string.Empty; // Movie title
 
     [Required(ErrorMessage = "Genre is required.")]
-    public string? Genre { get; set; }  // Genre (Action, Drama, etc.)
+    public string? Genre { get; set; } = string.Empty  // Genre (Action, Drama, etc.)
 
     [Range(1900, 2100, ErrorMessage = "Year must be between 1900 and 2100.")]
     public int? Year { get; set; }      // Release year
