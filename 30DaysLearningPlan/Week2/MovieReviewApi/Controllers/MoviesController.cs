@@ -1,82 +1,68 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.JsonPatch;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using MovieReviewApi.Models;
 using MovieReviewApi.Services;
 
 namespace MovieReviewApi.Controllers
 {
-  // The [ApiController] attribute enables automatic model validation
-  // and better error responses (e.g., 400 BadRequest for invalid model states)
   [Route("api/[controller]")]
   [ApiController]
   public class MoviesController : ControllerBase
   {
-    // Dependency Injection (DI)
-    // IMovieService abstracts the movie operations (Get, Add, Update, Delete)
     private readonly IMovieService _movieService;
 
-    // Constructor-based injection of the movie service
     public MoviesController(IMovieService movieService)
     {
       _movieService = movieService;
     }
 
     // =============================================================
-    // ✅ GET: api/movies/get-all-movies
-    // Returns a list of all movies
+    // GET: api/movies/get-all-movies
     // =============================================================
     [HttpGet("get-all-movies")]
-    public ActionResult<IEnumerable<Movie>> GetAllMovies()
+    public async Task<ActionResult<IEnumerable<Movie>>> GetAllMovies()
     {
-      var movies = _movieService.GetAllMovies();
-      return Ok(movies); // 200 OK
+      var movies = await _movieService.GetAllMoviesAsync();
+      return Ok(movies);
     }
 
     // =============================================================
-    // ✅ GET: api/movies/{id}
-    // Retrieves a single movie by its ID
+    // GET: api/movies/{id}
     // =============================================================
     [HttpGet("{id}")]
-    public ActionResult<Movie> GetMovieById(int id)
+    public async Task<ActionResult<Movie>> GetMovieById(int id)
     {
-      var movie = _movieService.GetMovieById(id);
-
+      var movie = await _movieService.GetMovieByIdAsync(id);
       if (movie == null)
         return NotFound(new { message = $"Movie with ID {id} not found." });
 
-      return Ok(movie); // 200 OK
+      return Ok(movie);
     }
 
     // =============================================================
-    // ✅ POST: api/movies/add-movie
-    // Adds a new movie
+    // POST: api/movies/add-movie
     // =============================================================
     [HttpPost("add-movie")]
-    public ActionResult AddMovie([FromBody] Movie movie)
-    {
-      // Server-side validation check
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState); // 400 Bad Request
-
-      _movieService.AddMovie(movie);
-
-      // 201 Created + returns the location of the new movie resource
-      return CreatedAtAction(nameof(GetMovieById), new { id = movie.Id }, movie);
-    }
-
-    // =============================================================
-    // ✅ PUT: api/movies/update-movie/{id}
-    // Performs a full update (replace all fields)
-    // =============================================================
-    [HttpPut("update-movie/{id}")]
-    public ActionResult UpdateMovie(int id, [FromBody] Movie updatedMovie)
+    public async Task<ActionResult<Movie>> AddMovie([FromBody] Movie movie)
     {
       if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      bool success = _movieService.UpdateMovie(id, updatedMovie);
+      var createdMovie = await _movieService.AddMovieAsync(movie);
+      return CreatedAtAction(nameof(GetMovieById), new { id = createdMovie.Id }, createdMovie);
+    }
 
+    // =============================================================
+    // PUT: api/movies/update-movie/{id}
+    // =============================================================
+    [HttpPut("update-movie/{id}")]
+    public async Task<ActionResult<Movie>> UpdateMovie(int id, [FromBody] Movie updatedMovie)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      var success = await _movieService.UpdateMovieAsync(id, updatedMovie);
       if (!success)
         return NotFound(new { message = $"Movie with ID {id} not found." });
 
@@ -88,49 +74,24 @@ namespace MovieReviewApi.Controllers
     }
 
     // =============================================================
-    // ✅ PATCH: api/movies/patch-movie/{id}
-    // Performs a partial update (only modifies provided fields)
+    // DELETE: api/movies/delete-movie/{id}
     // =============================================================
-    [HttpPatch("patch-movie/{id}")]
-    public ActionResult<Movie> PatchMovie(int id, [FromBody] JsonPatchDocument<Movie> patchDoc)
+    [HttpDelete("delete-movie/{id}")]
+    public async Task<ActionResult<Movie>> DeleteMovie(int id)
     {
-      if (patchDoc == null)
-        return BadRequest(new { message = "Invalid update info. Please try again." });
-
-      var movie = _movieService.GetMovieById(id);
-
-      if (movie == null)
+      var deletedMovie = await _movieService.DeleteMovieAsync(id);
+      if (deletedMovie == null)
         return NotFound(new { message = $"Movie with ID {id} not found." });
-
-      // Apply JSON patch (like replace, add, remove operations)
-      patchDoc.ApplyTo(movie, ModelState);
-
-      // Re-run validation after patching
-      TryValidateModel(movie);
-
-      if (!ModelState.IsValid)
-        return BadRequest(ModelState);
 
       return Ok(new
       {
-        message = $"{movie.Title} updated successfully.",
-        movie
+        message = $"{deletedMovie.Title} has been deleted successfully.",
+        movie = deletedMovie
       });
     }
 
     // =============================================================
-    // ✅ DELETE: api/movies/delete-movie/{id}
-    // Deletes a movie by ID
+    // PATCH: Skipped for now (Day 17)
     // =============================================================
-    [HttpDelete("delete-movie/{id}")]
-    public ActionResult DeleteMovie(int id)
-    {
-      var deletedMovie = _movieService.DeleteMovie(id);
-
-      if (deletedMovie == null)
-        return NotFound(new { message = $"Movie with ID {id} not found." });
-
-      return Ok(new { message = $"{deletedMovie.Title} has been deleted successfully." });
-    }
   }
 }
