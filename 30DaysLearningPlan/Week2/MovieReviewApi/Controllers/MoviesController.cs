@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MovieReviewApi.Models;
 using MovieReviewApi.Services;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace MovieReviewApi.Controllers
 {
@@ -91,7 +92,18 @@ namespace MovieReviewApi.Controllers
     }
 
     // =============================================================
-    // PATCH: Skipped for now (Day 17)
+    // PATCH: api/movies/patch-movie/{id}
     // =============================================================
+    [HttpPatch("patch-movie/{id}")]
+    public async Task<IActionResult> PatchMovie(int id, JsonPatchDocument<Movie> patchDoc)
+    {
+      if (patchDoc == null) return BadRequest();
+
+      var patched = await _movieService.PatchMovieAsync(id, patchDoc);
+
+      if (!patched) return NotFound();
+
+      return NoContent();
+    }
   }
 }

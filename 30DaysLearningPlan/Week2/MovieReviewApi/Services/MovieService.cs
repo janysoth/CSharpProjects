@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MovieReviewApi.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace MovieReviewApi.Services
 {
@@ -75,11 +76,23 @@ namespace MovieReviewApi.Services
 
     // =============================================================
     // PATCH MOVIE
-    // Skipped for now (Day 17)
     // =============================================================
-    public Task<bool> PatchMovieAsync(int id, JsonPatchDocument<Movie> patchDoc)
+    public async Task<bool> PatchMovieAsync(int id, JsonPatchDocument<Movie> patchDoc)
     {
-      throw new System.NotImplementedException();
+      var movie = await _context.Movies.FindAsync(id);
+
+      if (movie == null) return false;
+
+      patchDoc.ApplyTo(movie);
+
+      // Validation
+      var validationContext = new ValidationContext(movie);
+      var validationResults = new List<ValidationResult>();
+      bool isValid = Validator.TryValidateObject(movie, validationContext, validationResults, true);
+
+      await _context.SaveChangesAsync();
+
+      return true;
     }
   }
 }
