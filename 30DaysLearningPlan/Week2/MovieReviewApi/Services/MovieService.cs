@@ -77,22 +77,16 @@ namespace MovieReviewApi.Services
     // =============================================================
     // PATCH MOVIE
     // =============================================================
-    public async Task<bool> PatchMovieAsync(int id, JsonPatchDocument<Movie> patchDoc)
+    public async Task<Movie?> PatchMovieAsync(int id, JsonPatchDocument<Movie> patchDoc)
     {
       var movie = await _context.Movies.FindAsync(id);
 
-      if (movie == null) return false;
+      if (movie == null) return null;
 
+      // Just apply patch; let controller handle validation
       patchDoc.ApplyTo(movie);
 
-      // Validation
-      var validationContext = new ValidationContext(movie);
-      var validationResults = new List<ValidationResult>();
-      bool isValid = Validator.TryValidateObject(movie, validationContext, validationResults, true);
-
-      await _context.SaveChangesAsync();
-
-      return true;
+      return movie; // Don't save yet. 
     }
   }
 }

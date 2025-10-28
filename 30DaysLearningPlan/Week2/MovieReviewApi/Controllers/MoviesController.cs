@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MovieReviewApi.Models;
 using MovieReviewApi.Services;
 using Microsoft.AspNetCore.JsonPatch;
+using MovieReviewApi.Data;
 
 namespace MovieReviewApi.Controllers
 {
@@ -12,10 +13,13 @@ namespace MovieReviewApi.Controllers
   public class MoviesController : ControllerBase
   {
     private readonly IMovieService _movieService;
+    private readonly AppDbContext _context;
 
-    public MoviesController(IMovieService movieService)
+    public MoviesController(IMovieService movieService, AppDbContext context)
     {
       _movieService = movieService;
+      _context = context;
+
     }
 
     // =============================================================
@@ -97,13 +101,35 @@ namespace MovieReviewApi.Controllers
     [HttpPatch("patch-movie/{id}")]
     public async Task<IActionResult> PatchMovie(int id, JsonPatchDocument<Movie> patchDoc)
     {
-      if (patchDoc == null) return BadRequest();
+      if (patchDoc == null)
+        return BadRequest(new { message = "Invalid patch request." });
 
-      var patched = await _movieService.PatchMovieAsync(id, patchDoc);
+      // Apply the patch using the service
+      var movie = await _movieService.PatchMovieAsync(id, patchDoc);
 
-      if (!patched) return NotFound();
+      if (movie == null)
+        return NotFound(new { message = "Movie not found." });
 
-      return NoContent();
+      // ✅ Validate after patching
+      if (!TryValidateModel(movie))
+        return BadRequest(ModelState);
+
+      // Save only if valid
+      await _context.SaveChangesAsync();
+
+      // 🧩 Get the list of fields changed (for display)
+      var updatedFields = string.Join(", ", patchDoc.Operations.Select(op => op.path.TrimStart('/')));
+
+      // ✅ Clean response with a newline between sentences
+      var message = $"The movie '{movie.Title}' has been updated successfully.<br><br>Fields changed: {updatedFields}.";
+
+      // Return separate summary and details
+      return Ok(new
+      {
+        summary = $"The movie '{movie.Title}' has been updated successfully.",
+        details = $"Fields changed: {updatedFields}.",
+        data = movie
+      });
     }
   }
 }

@@ -11,7 +11,7 @@ namespace MovieReviewApi.Services
     Task<Movie?> GetMovieByIdAsync(int id);
     Task<Movie> AddMovieAsync(Movie movie);
     Task<bool> UpdateMovieAsync(int id, Movie updatedMovie);                  // Full update
-    Task<bool> PatchMovieAsync(int id, JsonPatchDocument<Movie> patchDoc);    // Partial update
+    Task<Movie?> PatchMovieAsync(int id, JsonPatchDocument<Movie> patchDoc);    // Partial update
     Task<Movie?> DeleteMovieAsync(int id);
   }
 }
