@@ -5,8 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using MovieReviewApi.Data;
 using MovieReviewApi.Services;
 using Microsoft.OpenApi.Models;
+using MovieReviewApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// =============================================================
+// 1️⃣ Add services to the container
+// =============================================================
 
 // Add DbContext (SQLite)
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -27,13 +32,29 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// =============================================================
+// 2️⃣ Configure the HTTP request pipeline
+// =============================================================
+
+// Swagger (development only)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MovieReview API V1"));
+    app.UseSwaggerUI(c =>
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "MovieReview API V1"));
 }
 
+// =============================================================
+// 🧩 Global Exception Middleware (MUST come before other middleware)
+// =============================================================
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
+// =============================================================
+// Remaining middleware pipeline
+// =============================================================
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
 app.MapControllers();
+
 app.Run();
