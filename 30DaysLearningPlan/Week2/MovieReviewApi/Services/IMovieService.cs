@@ -7,11 +7,12 @@ namespace MovieReviewApi.Services
 {
   public interface IMovieService
   {
-    Task<IEnumerable<Movie>> GetAllMoviesAsync();
+    Task<IEnumerable<Movie>> GetAllMoviesAsync(string? genre, string? sortBy, string? search, int page, int pageSize);
     Task<Movie?> GetMovieByIdAsync(int id);
     Task<Movie> AddMovieAsync(Movie movie);
-    Task<bool> UpdateMovieAsync(int id, Movie updatedMovie);                  // Full update
-    Task<Movie?> PatchMovieAsync(int id, JsonPatchDocument<Movie> patchDoc);    // Partial update
+    Task<bool> UpdateMovieAsync(int id, Movie updatedMovie);
+    Task<Movie?> PatchMovieAsync(int id, JsonPatchDocument<Movie> patchDoc);
     Task<Movie?> DeleteMovieAsync(int id);
+    Task<int> GetTotalMoviesCountAsync();
   }
 }
