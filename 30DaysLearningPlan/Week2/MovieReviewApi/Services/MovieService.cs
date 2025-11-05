@@ -21,11 +21,38 @@ namespace MovieReviewApi.Services
     // =============================================================
     // GET ALL MOVIES
     // =============================================================
-    public async Task<IEnumerable<Movie>> GetAllMoviesAsync()
+    public async Task<IEnumerable<Movie>> GetAllMoviesAsync(string? genre, string? sortBy, string? search, int page, int pageSize)
     {
-      return await _context.Movies.ToListAsync();
-    }
+      var query = _context.Movies.AsQueryable();
 
+      // 🔍 Search by title
+      if (!string.IsNullOrWhiteSpace(search))
+        query = query.Where(m => m.Title != null && m.Title.ToLower().Contains(search.ToLower()));
+
+      // 🎭 Filter by genre
+      if (!string.IsNullOrWhiteSpace(genre))
+        query = query.Where(m => m.Genre != null && m.Genre.ToLower() == genre.ToLower());
+
+      // 🔃 Sorting
+      query = sortBy switch
+      {
+        "title" => query.OrderBy(m => m.Title),
+        "year" => query.OrderBy(m => m.Year),
+        "rating" => query.OrderByDescending(m => m.Rating),
+        _ => query.OrderBy(m => m.Id)
+      };
+
+      // 📄 Pagination
+      int totalMovies = await query.CountAsync();
+      int totalPages = (int)Math.Ceiling(totalMovies / (double)pageSize);
+      if (page > totalPages)
+        page = totalPages > 0 ? totalPages : 1;
+
+      return await query
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
+    }
     // =============================================================
     // GET MOVIE BY ID
     // =============================================================
@@ -88,5 +115,12 @@ namespace MovieReviewApi.Services
 
       return movie; // Don't save yet. 
     }
+
+    // =============================================================
+    // GET TOTAL MOVIES COUNT
+    // =============================================================
+    public async Task<int> GetTotalMoviesCountAsync() =>
+      await _context.Movies.CountAsync();
+
   }
 }

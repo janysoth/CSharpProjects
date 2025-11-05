@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 // 1️⃣ Add services to the container
 // =============================================================
 
-// Add DbContext (SQLite)
+// Add DbContext (SQLite) - EF Core
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
