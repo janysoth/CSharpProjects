@@ -55,10 +55,10 @@ namespace MovieReviewApi.Services
     // =============================================================
     public async Task<bool> UpdateMovieAsync(int id, Movie updatedMovie)
     {
-      var existing = await _context.Movies.FindAsync(id);
-      if (existing == null) return false;
+      var existingMovie = await _context.Movies.FindAsync(id);
+      if (existingMovie == null) return false;
 
-      MovieHelpers.ApplyMovieUpdates(existing, updatedMovie);
+      existingMovie.ApplyUpdates(updatedMovie);
       await _context.SaveChangesAsync();
       return true;
     }
@@ -83,7 +83,7 @@ namespace MovieReviewApi.Services
       patchDoc.ApplyTo(movieCopy);
 
       // Apply normalized updates to the original movie
-      MovieHelpers.ApplyMovieUpdates(movie, movieCopy);
+      movie.ApplyUpdates(movieCopy);
 
       await _context.SaveChangesAsync();
       return movie;

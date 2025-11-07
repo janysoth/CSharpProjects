@@ -8,9 +8,9 @@ namespace MovieReviewApi.Services.Helpers
     public static class MovieHelpers
     {
         // =============================================================
-        // APPLY UPDATES
+        // EXTENSION: APPLY UPDATES
         // =============================================================
-        public static void ApplyMovieUpdates(Movie target, Movie source)
+        public static void ApplyUpdates(this Movie target, Movie source)
         {
             target.Title = source.Title;
             target.Genre = source.Genre;
@@ -19,7 +19,7 @@ namespace MovieReviewApi.Services.Helpers
         }
 
         // =============================================================
-        // SEARCH BY TITLE
+        // EXTENSION: SEARCH BY TITLE
         // =============================================================
         public static IQueryable<Movie> ApplySearch(this IQueryable<Movie> query, string? search)
         {
@@ -32,7 +32,7 @@ namespace MovieReviewApi.Services.Helpers
         }
 
         // =============================================================
-        // FILTER BY GENRE
+        // EXTENSION: FILTER BY GENRE
         // =============================================================
         public static IQueryable<Movie> ApplyGenreFilter(this IQueryable<Movie> query, string? genre)
         {
@@ -45,7 +45,7 @@ namespace MovieReviewApi.Services.Helpers
         }
 
         // =============================================================
-        // APPLY SORTING
+        // EXTENSION: APPLY SORTING
         // =============================================================
         public static IQueryable<Movie> ApplySorting(this IQueryable<Movie> query, string? sortBy) =>
             sortBy?.ToLower() switch
@@ -57,7 +57,7 @@ namespace MovieReviewApi.Services.Helpers
             };
 
         // =============================================================
-        // ADJUST PAGE
+        // EXTENSION: ADJUST PAGE
         // =============================================================
         public static async Task<int> AdjustPageAsync(this IQueryable<Movie> query, int page, int pageSize)
         {
