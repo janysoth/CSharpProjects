@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using MovieReviewApi.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using MovieReviewApi.Services.Helpers;
 
 namespace MovieReviewApi.Controllers
 {
@@ -269,9 +270,13 @@ namespace MovieReviewApi.Controllers
     public async Task<IActionResult> PatchMovie(int id, JsonPatchDocument<Movie> patchDoc)
     {
       if (patchDoc == null)
-        return BadRequest(new { status = "error", message = "Invalid patch request." });
+        return BadRequest(new
+        {
+          status = "error",
+          message = "Invalid patch request."
+        });
 
-      var movie = await _movieService.PatchMovieAsync(id, patchDoc);
+      var movie = await _context.Movies.FindAsync(id);
 
       if (movie == null)
         return NotFound(new
@@ -280,7 +285,14 @@ namespace MovieReviewApi.Controllers
           message = $"Movie with ID {id} not found."
         });
 
-      if (!TryValidateModel(movie))
+      // Get the patched copy (not applied to database yet)
+      var patchedCopy = await _movieService.PatchMovieAsync(id, patchDoc);
+
+      if (patchedCopy == null)
+        return BadRequest(new { status = "error", message = "Failed to apply patch." });
+
+      // Validate patched copy
+      if (!TryValidateModel(patchedCopy))
       {
         var errors = ModelState.Values
             .SelectMany(v => v.Errors)
@@ -295,6 +307,8 @@ namespace MovieReviewApi.Controllers
         });
       }
 
+      // ✅ Validation passed — now safely apply changes to original entity
+      movie.ApplyUpdates(patchedCopy);
       await _context.SaveChangesAsync();
 
       var updatedFields = string.Join(", ", patchDoc.Operations.Select(op => op.path.TrimStart('/')));

@@ -69,9 +69,10 @@ namespace MovieReviewApi.Services
     public async Task<Movie?> PatchMovieAsync(int id, JsonPatchDocument<Movie>? patchDoc)
     {
       var movie = await _context.Movies.FindAsync(id);
+
       if (movie == null || patchDoc == null) return null;
 
-      // Create a copy of the movie to apply the patch to (so we can normalize changes)
+      // Create a temporary copy to test the patch
       var movieCopy = new Movie
       {
         Title = movie.Title,
@@ -80,13 +81,11 @@ namespace MovieReviewApi.Services
         Rating = movie.Rating
       };
 
+      // Apply patch only to the copy
       patchDoc.ApplyTo(movieCopy);
 
-      // Apply normalized updates to the original movie
-      movie.ApplyUpdates(movieCopy);
-
-      await _context.SaveChangesAsync();
-      return movie;
+      // Return the patched copy for control-level validation
+      return movieCopy;
     }
 
     // =============================================================

@@ -10,12 +10,15 @@ namespace MovieReviewApi.Services.Helpers
         // =============================================================
         // EXTENSION: APPLY UPDATES
         // =============================================================
-        public static void ApplyUpdates(this Movie target, Movie source)
+        public static void ApplyUpdates(this Movie original, Movie updated)
         {
-            target.Title = source.Title;
-            target.Genre = source.Genre;
-            target.Year = source.Year;
-            target.Rating = source.Rating;
+            if (original == null || updated == null)
+                return;
+
+            original.Title = updated.Title;
+            original.Genre = updated.Genre;
+            original.Year = updated.Year;
+            original.Rating = updated.Rating;
         }
 
         // =============================================================
