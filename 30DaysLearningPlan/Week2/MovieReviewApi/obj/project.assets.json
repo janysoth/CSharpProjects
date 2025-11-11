@@ -3821,11 +3821,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week2/MovieReviewApi/MovieReviewApi.csproj",
+      "projectUniqueName": "/Users/jonnyvornsoth/Documents/CSharpProjects/CSharpProjects/30DaysLearningPlan/Week2/MovieReviewApi/MovieReviewApi.csproj",
       "projectName": "MovieReviewApi",
-      "projectPath": "/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week2/MovieReviewApi/MovieReviewApi.csproj",
+      "projectPath": "/Users/jonnyvornsoth/Documents/CSharpProjects/CSharpProjects/30DaysLearningPlan/Week2/MovieReviewApi/MovieReviewApi.csproj",
       "packagesPath": "/Users/jonnyvornsoth/.nuget/packages/",
-      "outputPath": "/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week2/MovieReviewApi/obj/",
+      "outputPath": "/Users/jonnyvornsoth/Documents/CSharpProjects/CSharpProjects/30DaysLearningPlan/Week2/MovieReviewApi/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/jonnyvornsoth/.nuget/NuGet/NuGet.Config"

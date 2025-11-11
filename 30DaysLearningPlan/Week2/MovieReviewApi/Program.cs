@@ -23,6 +23,19 @@ builder.Services.AddScoped<IMovieService, MovieService>();
 // Add controllers + Newtonsoft JSON for PATCH support
 builder.Services.AddControllers().AddNewtonsoftJson();
 
+// =============================================================
+// 🔹 Add CORS policy
+// =============================================================
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactDev", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173") // your React frontend URL
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -48,6 +61,11 @@ if (app.Environment.IsDevelopment())
 // 🧩 Global Exception Middleware (MUST come before other middleware)
 // =============================================================
 app.UseMiddleware<GlobalExceptionMiddleware>();
+
+// =============================================================
+// 🔹 Use CORS before controllers
+// =============================================================
+app.UseCors("AllowReactDev");
 
 // =============================================================
 // Remaining middleware pipeline

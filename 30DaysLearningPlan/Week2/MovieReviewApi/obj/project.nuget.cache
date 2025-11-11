@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QxXD+KvwWE0=",
+  "dgSpecHash": "cmQAvG9C37A=",
   "success": true,
-  "projectFilePath": "/Users/jonnyvornsoth/Documents/C#Projects/CSharpProjects/30DaysLearningPlan/Week2/MovieReviewApi/MovieReviewApi.csproj",
+  "projectFilePath": "/Users/jonnyvornsoth/Documents/CSharpProjects/CSharpProjects/30DaysLearningPlan/Week2/MovieReviewApi/MovieReviewApi.csproj",
   "expectedPackageFiles": [
     "/Users/jonnyvornsoth/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/jonnyvornsoth/.nuget/packages/microsoft.aspnetcore.jsonpatch/9.0.10/microsoft.aspnetcore.jsonpatch.9.0.10.nupkg.sha512",
