@@ -30,7 +30,7 @@ namespace MovieReviewApi.Controllers
     [HttpGet("get-all-movies")]
     public async Task<IActionResult> GetAllMovies()
     {
-      var movies = await _movieService.GetAllMoviesAsync();
+      var movies = await _movieService.GetAllMoviesUnpagedAsync();
       return Ok(new
       {
         status = "success",
@@ -45,11 +45,11 @@ namespace MovieReviewApi.Controllers
     // =============================================================
     [HttpGet("filter")]
     public async Task<IActionResult> GetFilteredMovies(
-      string? genre,      // optional query parameter → used to filter by genre
-      string? sortBy,     // optional → which field to sort by (e.g., "year" or "rating")
-      string? order,      // optional → sort direction ("asc" or "desc")
-      int page = 1,       // optional → current page number (defaults to 1)
-      int pageSize = 5    // optional → how many movies per page (defaults to 5)
+      string? genre,
+      string? sortBy,
+      string? order,
+      int page = 1,
+      int pageSize = 5
     )
     {
       // ------------------------------------------------------------
@@ -141,14 +141,14 @@ namespace MovieReviewApi.Controllers
       // Return a JSON response with useful metadata
       return Ok(new
       {
-        status = "success",     // general status message
-        totalItems,             // total number of movies found
-        totalPages,             // number of available pages
-        currentPage = page,     // current (possibly adjusted) page
-        pageSize,               // how many items per page
-        count = movies.Count,   // number of movies in this page
-        message,                // any informative message (optional)
-        data = movies           // actual movie list
+        status = "success",
+        totalItems,
+        totalPages,
+        currentPage = page,
+        pageSize,
+        count = movies.Count,
+        message,
+        data = movies
       });
     }
 

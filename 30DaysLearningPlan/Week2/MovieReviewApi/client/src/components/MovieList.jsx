@@ -1,4 +1,3 @@
-// src/components/MovieList.jsx
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import AddMovieForm from "./AddMovieForm";
@@ -8,6 +7,8 @@ const MovieList = () => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   const fetchMovies = async () => {
     setLoading(true);
@@ -28,7 +29,18 @@ const MovieList = () => {
   }, []);
 
   const handleMovieAdded = () => {
-    fetchMovies(); // refresh list after adding a movie
+    fetchMovies();
+    closeModal();
+  };
+
+  const openModal = () => setIsModalOpen(true);
+
+  const closeModal = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      setIsModalOpen(false);
+    }, 300);
   };
 
   if (loading) return <p className="message">Loading movies...</p>;
@@ -36,10 +48,11 @@ const MovieList = () => {
 
   return (
     <div className="movie-section">
-      <h2>Add New Movie</h2>
-      <AddMovieForm onMovieAdded={handleMovieAdded} />
+      <div className="movie-list-header">
+        <h2>Movie List</h2>
+        <button className="add-movie-btn" onClick={openModal}>+ Add Movie</button>
+      </div>
 
-      <h2>Movie List</h2>
       {movies.length === 0 ? (
         <p className="message">No movies found.</p>
       ) : (
@@ -53,6 +66,19 @@ const MovieList = () => {
               releaseYear={movie.releaseYear || movie.year}
             />
           ))}
+        </div>
+      )}
+
+      {(isModalOpen || isClosing) && (
+        <div
+          className={`modal-overlay ${isModalOpen && !isClosing ? "open" : ""}`}
+          onClick={closeModal}
+        >
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Add New Movie</h2>
+            <AddMovieForm onMovieAdded={handleMovieAdded} />
+            <button className="modal-close" onClick={closeModal}>✖</button>
+          </div>
         </div>
       )}
     </div>

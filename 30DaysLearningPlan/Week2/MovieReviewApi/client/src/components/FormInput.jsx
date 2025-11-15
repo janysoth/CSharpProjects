@@ -8,9 +8,9 @@ const FormInput = ({ label, name, value, onChange, error, type = "text" }) => {
       <input
         type={type}
         id={name}
-        name={name}          // ✅ Must match formData key
-        value={value}        // ✅ Controlled value from parent
-        onChange={onChange}  // ✅ Updates parent state
+        name={name}
+        value={value}
+        onChange={onChange}
         className={`input ${error ? "input-error" : ""}`}
       />
       {error && <p className="error-text">{error}</p>}

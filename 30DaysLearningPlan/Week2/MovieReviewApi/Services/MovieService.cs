@@ -1,11 +1,12 @@
 using MovieReviewApi.Models;
-using Microsoft.EntityFrameworkCore;
+using MovieReviewApi.Models.DTOs;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.EntityFrameworkCore;
+using MovieReviewApi.Data;
+using MovieReviewApi.Services.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MovieReviewApi.Data;
-using MovieReviewApi.Services.Helpers;
 
 namespace MovieReviewApi.Services
 {
@@ -16,22 +17,49 @@ namespace MovieReviewApi.Services
     public MovieService(AppDbContext context) => _context = context;
 
     // =============================================================
-    // GET ALL MOVIES
+    // GET ALL MOVIES WITHOUT PAGINATION
     // =============================================================
-    public async Task<IEnumerable<Movie>> GetAllMoviesAsync(
-        string? genre, string? sortBy, string? search, int page, int pageSize)
+    public async Task<IEnumerable<Movie>> GetAllMoviesUnpagedAsync()
+    {
+      return await _context.Movies
+          .OrderBy(m => m.Id)
+          .ToListAsync();
+    }
+
+    // =============================================================
+    // GET ALL MOVIES WITH PAGINATION / FILTER / SORT
+    // =============================================================
+    public async Task<PagedMoviesResult> GetAllMoviesAsync(
+        string? genre = null,
+        string? sortBy = null,
+        string? search = null,
+        int page = 1,
+        int pageSize = 5)
     {
       var query = _context.Movies.AsQueryable()
           .ApplySearch(search)
           .ApplyGenreFilter(genre)
           .ApplySorting(sortBy);
 
-      page = await query.AdjustPageAsync(page, pageSize);
+      var totalItems = await query.CountAsync();
+      var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-      return await query
+      if (page < 1) page = 1;
+      if (page > totalPages && totalPages > 0) page = totalPages;
+
+      var movies = await query
           .Skip((page - 1) * pageSize)
           .Take(pageSize)
           .ToListAsync();
+
+      return new PagedMoviesResult
+      {
+        Movies = movies,
+        TotalItems = totalItems,
+        TotalPages = totalPages,
+        Page = page,
+        PageSize = pageSize
+      };
     }
 
     // =============================================================
@@ -41,7 +69,7 @@ namespace MovieReviewApi.Services
         await _context.Movies.FindAsync(id);
 
     // =============================================================
-    // ADD NEW MOVIE
+    // ADD MOVIE
     // =============================================================
     public async Task<Movie> AddMovieAsync(Movie movie)
     {
@@ -51,14 +79,14 @@ namespace MovieReviewApi.Services
     }
 
     // =============================================================
-    // UPDATE MOVIE (FULL)
+    // UPDATE MOVIE
     // =============================================================
     public async Task<bool> UpdateMovieAsync(int id, Movie updatedMovie)
     {
-      var existingMovie = await _context.Movies.FindAsync(id);
-      if (existingMovie == null) return false;
+      var existing = await _context.Movies.FindAsync(id);
+      if (existing == null) return false;
 
-      existingMovie.ApplyUpdates(updatedMovie);
+      existing.ApplyUpdates(updatedMovie);
       await _context.SaveChangesAsync();
       return true;
     }
@@ -69,11 +97,9 @@ namespace MovieReviewApi.Services
     public async Task<Movie?> PatchMovieAsync(int id, JsonPatchDocument<Movie>? patchDoc)
     {
       var movie = await _context.Movies.FindAsync(id);
-
       if (movie == null || patchDoc == null) return null;
 
-      // Create a temporary copy to test the patch
-      var movieCopy = new Movie
+      var copy = new Movie
       {
         Title = movie.Title,
         Genre = movie.Genre,
@@ -81,11 +107,8 @@ namespace MovieReviewApi.Services
         Rating = movie.Rating
       };
 
-      // Apply patch only to the copy
-      patchDoc.ApplyTo(movieCopy);
-
-      // Return the patched copy for control-level validation
-      return movieCopy;
+      patchDoc.ApplyTo(copy);
+      return copy;
     }
 
     // =============================================================
@@ -102,7 +125,7 @@ namespace MovieReviewApi.Services
     }
 
     // =============================================================
-    // GET TOTAL MOVIES COUNT
+    // TOTAL MOVIES COUNT
     // =============================================================
     public async Task<int> GetTotalMoviesCountAsync() =>
         await _context.Movies.CountAsync();
