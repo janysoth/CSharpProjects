@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace MovieReviewApi.Services.Helpers
 {
-    /// Provides extension methods to help with Movie entity operations 
-    /// such as updating fields, filtering, searching, sorting, and pagination.
+    /// Provides extension methods for Movie entity operations:
+    /// updating, searching, filtering, sorting, and pagination.
     public static class MovieHelpers
     {
         // =============================================================
@@ -15,11 +15,9 @@ namespace MovieReviewApi.Services.Helpers
         // =============================================================
         public static void ApplyUpdates(this Movie original, Movie updated)
         {
-            // Guard clause: ensure both objects are valid
             if (original == null || updated == null)
                 return;
 
-            // Only update mutable properties
             original.Title = updated.Title;
             original.Genre = updated.Genre;
             original.Year = updated.Year;
@@ -29,8 +27,6 @@ namespace MovieReviewApi.Services.Helpers
         // =============================================================
         // 🔍 SEARCH BY TITLE
         // =============================================================
-
-        /// Filters movies whose title contains the given search term (case-insensitive).
         public static IQueryable<Movie> ApplySearch(this IQueryable<Movie> query, string? search)
         {
             if (string.IsNullOrWhiteSpace(search))
@@ -38,14 +34,14 @@ namespace MovieReviewApi.Services.Helpers
 
             string lowerSearch = search.ToLower();
 
-            return query.Where(m => m.Title != null && m.Title.ToLower().Contains(lowerSearch));
+            return query.Where(m =>
+                m.Title != null &&
+                m.Title.ToLower().Contains(lowerSearch));
         }
 
         // =============================================================
         // 🎬 FILTER BY GENRE
         // =============================================================
-
-        /// Filters movies by the specified genre (case-insensitive).
         public static IQueryable<Movie> ApplyGenreFilter(this IQueryable<Movie> query, string? genre)
         {
             if (string.IsNullOrWhiteSpace(genre))
@@ -53,15 +49,15 @@ namespace MovieReviewApi.Services.Helpers
 
             string lowerGenre = genre.ToLower();
 
-            return query.Where(m => m.Genre != null && m.Genre.ToLower() == lowerGenre);
+            return query.Where(m =>
+                m.Genre != null &&
+                m.Genre.ToLower() == lowerGenre);
         }
 
         // =============================================================
-        // ↕️ APPLY SORTING
+        // ↕️ APPLY SORTING (1-parameter legacy version)
+        // Keeps compatibility with existing code
         // =============================================================
-
-        /// Sorts movies based on the specified field (title, year, rating, etc.).
-        /// Defaults to sorting by ID.
         public static IQueryable<Movie> ApplySorting(this IQueryable<Movie> query, string? sortBy)
         {
             if (string.IsNullOrWhiteSpace(sortBy))
@@ -72,26 +68,61 @@ namespace MovieReviewApi.Services.Helpers
                 "title" => query.OrderBy(m => m.Title),
                 "year" => query.OrderBy(m => m.Year),
                 "rating" => query.OrderByDescending(m => m.Rating),
-                _ => query.OrderBy(m => m.Id)
+                _ => query.OrderBy(m => m.Id) // default
+            };
+        }
+
+        // =============================================================
+        // ↕️ APPLY SORTING (2-parameter version: sortBy + order)
+        // Used for dynamic paged filtering (ASC/DESC)
+        // =============================================================
+        public static IQueryable<Movie> ApplySorting(this IQueryable<Movie> query, string? sortBy, string? order)
+        {
+            bool descending = order?.ToLower() == "desc";
+
+            return sortBy?.ToLower() switch
+            {
+                "title" =>
+                    descending ? query.OrderByDescending(m => m.Title)
+                               : query.OrderBy(m => m.Title),
+
+                "year" =>
+                    descending ? query.OrderByDescending(m => m.Year)
+                               : query.OrderBy(m => m.Year),
+
+                "rating" =>
+                    descending ? query.OrderByDescending(m => m.Rating)
+                               : query.OrderBy(m => m.Rating),
+
+                // Default fallback: sort by ID
+                _ =>
+                    descending ? query.OrderByDescending(m => m.Id)
+                               : query.OrderBy(m => m.Id)
             };
         }
 
         // =============================================================
         // 📄 ADJUST PAGE NUMBER
+        // Ensures the user never gets an invalid or empty page.
         // =============================================================
-
-        /// Ensures the requested page number is within the valid range of pages.
-        /// If the requested page exceeds total pages, the last valid page is returned.
         public static async Task<int> AdjustPageAsync(this IQueryable<Movie> query, int page, int pageSize)
         {
             if (pageSize <= 0)
-                pageSize = 10; // default fallback
+                pageSize = 10;
 
             int totalMovies = await query.CountAsync();
             int totalPages = (int)Math.Ceiling(totalMovies / (double)pageSize);
 
-            // If requested page exceeds available pages, return last valid page
-            return page > totalPages ? Math.Max(totalPages, 1) : Math.Max(page, 1);
+            if (totalPages == 0)
+                return 1;
+
+            if (page < 1)
+                return 1;
+
+            if (page > totalPages)
+                return totalPages;
+
+            return page;
         }
     }
 }

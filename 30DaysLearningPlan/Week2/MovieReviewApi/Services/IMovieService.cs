@@ -4,19 +4,15 @@ using Microsoft.AspNetCore.JsonPatch;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+
 namespace MovieReviewApi.Services
 {
   public interface IMovieService
   {
-    Task<IEnumerable<Movie>> GetAllMoviesUnpagedAsync(); // ✅ New
-    Task<PagedMoviesResult> GetAllMoviesAsync(
-        string? genre = null,
-        string? sortBy = null,
-        string? search = null,
-        int page = 1,
-        int pageSize = 5
-    );
+    Task<PagedMoviesResult> GetPagedMoviesAsync(
+        string? genre, string? sortBy, string? order, int page, int pageSize);
 
+    Task<IEnumerable<Movie>> GetAllMoviesUnpagedAsync();
     Task<Movie?> GetMovieByIdAsync(int id);
     Task<Movie> AddMovieAsync(Movie movie);
     Task<bool> UpdateMovieAsync(int id, Movie updatedMovie);

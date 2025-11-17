@@ -4,9 +4,6 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 using MovieReviewApi.Data;
 using MovieReviewApi.Services.Helpers;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MovieReviewApi.Services
 {
@@ -17,35 +14,33 @@ namespace MovieReviewApi.Services
     public MovieService(AppDbContext context) => _context = context;
 
     // =============================================================
-    // GET ALL MOVIES WITHOUT PAGINATION
+    // GET PAGED MOVIES WITH FILTERING, SORTING, & PAGE ADJUSTMENT
     // =============================================================
-    public async Task<IEnumerable<Movie>> GetAllMoviesUnpagedAsync()
-    {
-      return await _context.Movies
-          .OrderBy(m => m.Id)
-          .ToListAsync();
-    }
-
-    // =============================================================
-    // GET ALL MOVIES WITH PAGINATION / FILTER / SORT
-    // =============================================================
-    public async Task<PagedMoviesResult> GetAllMoviesAsync(
-        string? genre = null,
-        string? sortBy = null,
-        string? search = null,
-        int page = 1,
-        int pageSize = 5)
+    public async Task<PagedMoviesResult> GetPagedMoviesAsync(
+        string? genre, string? sortBy, string? order, int page, int pageSize)
     {
       var query = _context.Movies.AsQueryable()
-          .ApplySearch(search)
           .ApplyGenreFilter(genre)
-          .ApplySorting(sortBy);
+          .ApplySorting(sortBy, order);
 
       var totalItems = await query.CountAsync();
       var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-      if (page < 1) page = 1;
-      if (page > totalPages && totalPages > 0) page = totalPages;
+      // -------------------------------
+      // PAGE ADJUST LOGIC
+      // -------------------------------
+      if (totalPages == 0)
+      {
+        page = 1;
+      }
+      else if (page < 1)
+      {
+        page = 1;
+      }
+      else if (page > totalPages)
+      {
+        page = totalPages;
+      }
 
       var movies = await query
           .Skip((page - 1) * pageSize)
@@ -63,14 +58,17 @@ namespace MovieReviewApi.Services
     }
 
     // =============================================================
-    // GET MOVIE BY ID
+    // GET ALL MOVIES UNPAGED
+    // =============================================================
+    public async Task<IEnumerable<Movie>> GetAllMoviesUnpagedAsync() =>
+        await _context.Movies.ToListAsync();
+
+    // =============================================================
+    // OTHER CRUD METHODS
     // =============================================================
     public async Task<Movie?> GetMovieByIdAsync(int id) =>
         await _context.Movies.FindAsync(id);
 
-    // =============================================================
-    // ADD MOVIE
-    // =============================================================
     public async Task<Movie> AddMovieAsync(Movie movie)
     {
       _context.Movies.Add(movie);
@@ -78,28 +76,22 @@ namespace MovieReviewApi.Services
       return movie;
     }
 
-    // =============================================================
-    // UPDATE MOVIE
-    // =============================================================
     public async Task<bool> UpdateMovieAsync(int id, Movie updatedMovie)
     {
-      var existing = await _context.Movies.FindAsync(id);
-      if (existing == null) return false;
+      var existingMovie = await _context.Movies.FindAsync(id);
+      if (existingMovie == null) return false;
 
-      existing.ApplyUpdates(updatedMovie);
+      existingMovie.ApplyUpdates(updatedMovie);
       await _context.SaveChangesAsync();
       return true;
     }
 
-    // =============================================================
-    // PATCH MOVIE
-    // =============================================================
-    public async Task<Movie?> PatchMovieAsync(int id, JsonPatchDocument<Movie>? patchDoc)
+    public async Task<Movie?> PatchMovieAsync(int id, JsonPatchDocument<Movie> patchDoc)
     {
       var movie = await _context.Movies.FindAsync(id);
       if (movie == null || patchDoc == null) return null;
 
-      var copy = new Movie
+      var movieCopy = new Movie
       {
         Title = movie.Title,
         Genre = movie.Genre,
@@ -107,13 +99,10 @@ namespace MovieReviewApi.Services
         Rating = movie.Rating
       };
 
-      patchDoc.ApplyTo(copy);
-      return copy;
+      patchDoc.ApplyTo(movieCopy);
+      return movieCopy;
     }
 
-    // =============================================================
-    // DELETE MOVIE
-    // =============================================================
     public async Task<Movie?> DeleteMovieAsync(int id)
     {
       var movie = await _context.Movies.FindAsync(id);
@@ -124,9 +113,6 @@ namespace MovieReviewApi.Services
       return movie;
     }
 
-    // =============================================================
-    // TOTAL MOVIES COUNT
-    // =============================================================
     public async Task<int> GetTotalMoviesCountAsync() =>
         await _context.Movies.CountAsync();
   }
