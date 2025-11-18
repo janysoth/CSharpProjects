@@ -1,24 +1,31 @@
-import { useEffect, useState } from "react";
-import api from "../services/api";
-import AddMovieForm from "./AddMovieForm";
+import React, { useEffect, useState } from "react";
+import { deleteMovie, getAllMovies } from "../services/api";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
+import EditMovieModal from "./EditMovieModal";
 import MovieCard from "./MovieCard";
 
-const MovieList = () => {
-  const [movies, setMovies] = useState([]);
+export default function MovieList() {
+  const [movies, setMovies] = useState([]); // Always start as an array
   const [loading, setLoading] = useState(true);
+  const [modalMovie, setModalMovie] = useState(null);
+  const [deleteMovieId, setDeleteMovieId] = useState(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
 
+  // Fetch movies from API
   const fetchMovies = async () => {
-    setLoading(true);
-    setError("");
     try {
-      const res = await api.get("/get-all-movies");
-      setMovies(res.data.data || []);
+      setLoading(true);
+      setError("");
+      const res = await getAllMovies();
+      console.log(res.data.data);
+      const moviesData = res?.data?.data ?? [];
+      setMovies(moviesData);
     } catch (err) {
-      setError("Failed to fetch movies. Please try again later.");
       console.error(err);
+      setError("Failed to load movies.");
+      setMovies([]); // fallback to empty array
     } finally {
       setLoading(false);
     }
@@ -28,61 +35,78 @@ const MovieList = () => {
     fetchMovies();
   }, []);
 
-  const handleMovieAdded = () => {
-    fetchMovies();
-    closeModal();
+  // Delete logic
+  const handleDeleteClick = (id) => setDeleteMovieId(id);
+
+  const handleDeleteConfirm = async () => {
+    if (!deleteMovieId) return;
+    try {
+      setDeleteLoading(true);
+      await deleteMovie(deleteMovieId);
+      setMovies((prev) => prev.filter((m) => m.id !== deleteMovieId));
+      setMessage("Movie deleted successfully.");
+    } catch (err) {
+      console.error(err);
+      setError("Failed to delete movie.");
+    } finally {
+      setDeleteLoading(false);
+      setDeleteMovieId(null);
+    }
   };
 
-  const openModal = () => setIsModalOpen(true);
-
-  const closeModal = () => {
-    setIsClosing(true);
-    setTimeout(() => {
-      setIsClosing(false);
-      setIsModalOpen(false);
-    }, 300);
-  };
-
-  if (loading) return <p className="message">Loading movies...</p>;
-  if (error) return <p className="message error">{error}</p>;
-
+  // JSX Rendering
   return (
-    <div className="movie-section">
-      <div className="movie-list-header">
-        <h2>Movie List</h2>
-        <button className="add-movie-btn" onClick={openModal}>+ Add Movie</button>
-      </div>
+    <section className="movie-section">
+      {message && <p className="message success">{message}</p>}
+      {error && <p className="message error">{error}</p>}
 
-      {movies.length === 0 ? (
+      {loading ? (
+        <p className="message">Loading movies…</p>
+      ) : !movies || movies.length === 0 ? (
         <p className="message">No movies found.</p>
       ) : (
         <div className="movie-list">
           {movies.map((movie) => (
             <MovieCard
-              key={movie.id ?? movie._id ?? movie.title}
+              key={movie.id}
               title={movie.title}
               genre={movie.genre}
               rating={movie.rating}
-              releaseYear={movie.releaseYear || movie.year}
+              releaseYear={movie.year}
+              deleting={deleteMovieId === movie.id && deleteLoading}
+              onEdit={() => setModalMovie(movie)}
+              onDelete={() => handleDeleteClick(movie.id)}
             />
           ))}
         </div>
       )}
 
-      {(isModalOpen || isClosing) && (
-        <div
-          className={`modal-overlay ${isModalOpen && !isClosing ? "open" : ""}`}
-          onClick={closeModal}
-        >
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2>Add New Movie</h2>
-            <AddMovieForm onMovieAdded={handleMovieAdded} />
-            <button className="modal-close" onClick={closeModal}>✖</button>
-          </div>
-        </div>
+      {/* Edit Modal */}
+      {modalMovie && (
+        <EditMovieModal
+          movie={modalMovie}
+          onClose={() => setModalMovie(null)}
+          onSuccess={(updatedMovie) => {
+            setMovies((prev) =>
+              prev.map((m) => (m.id === updatedMovie.id ? updatedMovie : m))
+            );
+            setModalMovie(null);
+            setMessage("Movie updated successfully.");
+          }}
+        />
       )}
-    </div>
-  );
-};
 
-export default MovieList;
+      {/* Delete Confirmation Modal */}
+      {deleteMovieId && (
+        <ConfirmDeleteModal
+          movieTitle={
+            movies.find((m) => m.id === deleteMovieId)?.title || "this movie"
+          }
+          onCancel={() => setDeleteMovieId(null)}
+          onConfirm={handleDeleteConfirm}
+          loading={deleteLoading}
+        />
+      )}
+    </section>
+  );
+}
