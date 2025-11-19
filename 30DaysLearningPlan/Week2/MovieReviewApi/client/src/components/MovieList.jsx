@@ -19,7 +19,6 @@ export default function MovieList() {
       setLoading(true);
       setError("");
       const res = await getAllMovies();
-      console.log(res.data.data);
       const moviesData = res?.data?.data ?? [];
       setMovies(moviesData);
     } catch (err) {
@@ -54,6 +53,18 @@ export default function MovieList() {
     }
   };
 
+  const handleUpdateMovie = (updatedMovie) => {
+    setMovies(prevMovies =>
+      prevMovies.map(m =>
+        m.id === updatedMovie.id
+          ? { ...m, ...updatedMovie } // merge changes instead of replacing
+          : m
+      )
+    );
+    setModalMovie(null);
+    setMessage("Movie updated successfully.");
+  };
+
   // JSX Rendering
   return (
     <section className="movie-section">
@@ -86,13 +97,7 @@ export default function MovieList() {
         <EditMovieModal
           movie={modalMovie}
           onClose={() => setModalMovie(null)}
-          onSuccess={(updatedMovie) => {
-            setMovies((prev) =>
-              prev.map((m) => (m.id === updatedMovie.id ? updatedMovie : m))
-            );
-            setModalMovie(null);
-            setMessage("Movie updated successfully.");
-          }}
+          onSuccess={handleUpdateMovie}
         />
       )}
 

@@ -46,6 +46,7 @@ export default function EditMovieModal({ movie, onClose, onSuccess }) {
 
       const res = await updateMovie(movie.id, payload);
       onSuccess(res.data.data);
+      window.location.reload();
     } catch (err) {
       console.error(err);
       alert("Failed to save movie. Try again.");
