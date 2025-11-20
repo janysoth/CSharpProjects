@@ -293,3 +293,59 @@ main {
     margin: 0;
   }
 }
+
+/* ===== Movie Card Action Icons ===== */
+.movie-card {
+  position: relative;
+  padding-bottom: 40px;
+  /* add space for icons */
+}
+
+.movie-card-actions {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+
+  display: flex;
+  gap: 10px;
+}
+
+/* Base icon button */
+.icon-btn {
+  background: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 6px 8px;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease, background-color 0.2s, color 0.2s;
+}
+
+/* Hover effect for all icons */
+.icon-btn:hover {
+  transform: scale(1.15);
+}
+
+/* Edit Icon Styling */
+.edit-icon {
+  color: #2563eb;
+  /* blue */
+}
+
+.edit-icon:hover {
+  background-color: #2563eb;
+  color: white;
+}
+
+/* Delete Icon Styling */
+.delete-icon {
+  color: #dc2626;
+  /* red */
+}
+
+.delete-icon:hover {
+  background-color: #dc2626;
+  color: white;
+}

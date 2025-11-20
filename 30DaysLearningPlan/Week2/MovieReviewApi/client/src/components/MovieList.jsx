@@ -7,7 +7,7 @@ import MovieCard from "./MovieCard";
 export default function MovieList() {
   const [movies, setMovies] = useState([]); // Always start as an array
   const [loading, setLoading] = useState(true);
-  const [modalMovie, setModalMovie] = useState(null);
+  const [editMovieModal, setEditMovieModal] = useState(null);
   const [deleteMovieId, setDeleteMovieId] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -61,7 +61,7 @@ export default function MovieList() {
           : m
       )
     );
-    setModalMovie(null);
+    setEditMovieModal(null);
     setMessage("Movie updated successfully.");
   };
 
@@ -85,7 +85,7 @@ export default function MovieList() {
               rating={movie.rating}
               releaseYear={movie.year}
               deleting={deleteMovieId === movie.id && deleteLoading}
-              onEdit={() => setModalMovie(movie)}
+              onEdit={() => setEditMovieModal(movie)}
               onDelete={() => handleDeleteClick(movie.id)}
             />
           ))}
@@ -93,10 +93,10 @@ export default function MovieList() {
       )}
 
       {/* Edit Modal */}
-      {modalMovie && (
+      {editMovieModal && (
         <EditMovieModal
-          movie={modalMovie}
-          onClose={() => setModalMovie(null)}
+          movie={editMovieModal}
+          onClose={() => setEditMovieModal(null)}
           onSuccess={handleUpdateMovie}
         />
       )}
