@@ -6,9 +6,8 @@ import EditMovieModal from "./EditMovieModal";
 import MovieCard from "./MovieCard";
 
 export default function MovieList() {
-  const [movies, setMovies] = useState([]); // Always start as an array
+  const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [addMovieModal, setAddMovieModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [editMovieModal, setEditMovieModal] = useState(null);
