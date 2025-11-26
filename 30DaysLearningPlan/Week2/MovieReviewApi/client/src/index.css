@@ -1,4 +1,28 @@
-/* ===== Global Reset ===== */
+/* =====================================================
+   GLOBAL STYLES & VARIABLES
+   ===================================================== */
+:root {
+  /* Colors */
+  --color-bg: #f5f5f5;
+  --color-text: #222;
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-danger: #dc2626;
+  --color-success: #16a34a;
+  --color-warning: #ffcc00;
+  --color-white: #fff;
+  --color-gray: #555;
+
+  /* Layout */
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.12);
+  --transition-fast: 0.2s;
+  --transition-med: 0.3s;
+}
+
+/* ===== Reset ===== */
 * {
   margin: 0;
   padding: 0;
@@ -7,14 +31,20 @@
 
 body {
   font-family: 'Segoe UI', Roboto, sans-serif;
-  background-color: #f5f5f5;
-  color: #222;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
-/* ===== Navbar Styles ===== */
+main {
+  padding: 2rem;
+}
+
+/* =====================================================
+   NAVBAR
+===================================================== */
 nav {
   background-color: #222;
-  color: #fff;
+  color: var(--color-white);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -23,27 +53,23 @@ nav {
 
 nav h2 {
   font-size: 1.25rem;
-  margin: 0;
 }
 
 nav a {
-  color: #fff;
+  color: var(--color-white);
   text-decoration: none;
   margin: 0 0.75rem;
   font-weight: 500;
-  transition: color 0.2s;
+  transition: color var(--transition-fast);
 }
 
 nav a:hover {
-  color: #ffcc00;
+  color: var(--color-warning);
 }
 
-/* ===== Page Container ===== */
-main {
-  padding: 2rem;
-}
-
-/* ===== Movie Section Layout ===== */
+/* =====================================================
+   SECTION LAYOUT
+===================================================== */
 .movie-section {
   padding: 1rem;
 }
@@ -56,22 +82,47 @@ main {
   margin-bottom: 1rem;
 }
 
-.add-movie-btn {
-  background-color: #2563eb;
-  color: white;
+/* =====================================================
+   BUTTON BASE STYLES
+===================================================== */
+button {
+  font-family: inherit;
+}
+
+.btn {
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
   font-weight: 500;
-  transition: background-color 0.2s;
+  transition: background-color var(--transition-fast), transform 0.1s;
 }
 
-.add-movie-btn:hover {
-  background-color: #1d4ed8;
+/* Primary Button */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
 }
 
-/* ===== Movie List & Card ===== */
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.btn-disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Add Movie Button */
+.add-movie-btn {
+  composes: btn btn-primary;
+}
+
+/* =====================================================
+   MOVIE LIST & CARD
+===================================================== */
 .movie-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -82,11 +133,14 @@ main {
 
 .movie-card {
   width: 220px;
-  background: #ffffff;
-  border-radius: 10px;
+  background: var(--color-white);
+  border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast);
+  position: relative;
+  padding-bottom: 40px;
+  /* space for icons */
 }
 
 .movie-card:hover {
@@ -112,25 +166,49 @@ main {
 
 .movie-info p {
   margin: 0.25rem 0;
-  color: #555;
+  color: var(--color-gray);
 }
 
-/* ===== Messages ===== */
+/* ===== Add Movie Button ===== */
+.add-movie-btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1rem;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  transition: background-color var(--transition-fast), transform 0.1s;
+}
+
+.add-movie-btn:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+/* =====================================================
+   MESSAGES
+===================================================== */
 .message {
   text-align: center;
   margin-top: 2rem;
   font-size: 1.1rem;
 }
 
-.message.error {
-  color: #e63946;
+.message.error,
+.error-text {
+  color: var(--color-danger);
 }
 
-.message.success {
-  color: #16a34a;
+.message.success,
+.success-text {
+  color: var(--color-success);
 }
 
-/* ===== AddMovieForm Styles ===== */
+/* =====================================================
+   FORM STYLES
+===================================================== */
 .add-movie-form {
   display: flex;
   flex-direction: column;
@@ -138,107 +216,61 @@ main {
   max-width: 400px;
   margin: 2rem auto;
   padding: 1.5rem;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  transition: box-shadow 0.2s ease-in-out;
+  background: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-fast);
 }
 
 .add-movie-form:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-md);
 }
 
 .add-movie-form h2 {
   text-align: center;
   margin-bottom: 1rem;
-  color: #111;
 }
 
-/* ===== Form Inputs ===== */
+/* Inputs */
 .input {
   width: 100%;
   padding: 0.6rem 0.8rem;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 1rem;
-  transition: border-color 0.2s;
+  transition: border-color var(--transition-fast);
 }
 
 .input:focus {
-  border-color: #2563eb;
+  border-color: var(--color-primary);
   outline: none;
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
 .input-error {
-  border-color: #e63946;
+  border-color: var(--color-danger);
 }
 
-/* ===== Form Labels ===== */
+/* Labels */
 .add-movie-form label {
   font-weight: 500;
-  margin-bottom: 0.25rem;
-  display: block;
-  color: #111;
 }
 
-/* ===== Error & Success Text ===== */
-.error-text,
-.message.error {
-  color: #e63946;
-  font-size: 0.9rem;
-  margin-top: -0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.success-text {
-  color: #16a34a;
-  font-size: 0.95rem;
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
-
-/* ===== Submit Button ===== */
-.submit-btn {
-  background-color: #2563eb;
-  color: white;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
-  transition: background-color 0.2s, transform 0.1s;
-}
-
-.submit-btn:hover {
-  background-color: #1d4ed8;
-  transform: translateY(-1px);
-}
-
-.submit-btn:disabled {
-  background-color: #94a3b8;
-  cursor: not-allowed;
-  transform: none;
-}
-
-/* ===== Modal Styles with Animation ===== */
+/* =====================================================
+   MODAL
+===================================================== */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 
-  /* Start hidden and fade in */
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-med);
 }
 
 .modal-overlay.open {
@@ -247,18 +279,16 @@ main {
 }
 
 .modal-content {
-  background: #fff;
+  background: var(--color-white);
   padding: 2rem;
-  border-radius: 10px;
-  position: relative;
+  border-radius: var(--radius);
   max-width: 500px;
   width: 90%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-md);
 
-  /* Scale animation */
   transform: scale(0.8);
   opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform var(--transition-med), opacity var(--transition-med);
 }
 
 .modal-overlay.open .modal-content {
@@ -274,78 +304,67 @@ main {
   border: none;
   font-size: 1.25rem;
   cursor: pointer;
-  color: #555;
+  color: var(--color-gray);
 }
 
 .modal-close:hover {
-  color: #000;
+  color: var(--color-text);
 }
 
-/* ===== Responsive Adjustments ===== */
+/* =====================================================
+   ICON BUTTONS
+===================================================== */
+.movie-card-actions {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.icon-btn {
+  background: var(--color-white);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 6px 8px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.icon-btn:hover {
+  transform: scale(1.15);
+}
+
+.edit-icon {
+  color: var(--color-primary);
+}
+
+.edit-icon:hover {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.delete-icon {
+  color: var(--color-danger);
+}
+
+.delete-icon:hover {
+  background-color: var(--color-danger);
+  color: var(--color-white);
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 @media (min-width: 768px) {
   .movie-section {
     display: grid;
-    grid-template-columns: 1fr;
     gap: 2rem;
   }
 
   .add-movie-form {
     margin: 0;
   }
-}
-
-/* ===== Movie Card Action Icons ===== */
-.movie-card {
-  position: relative;
-  padding-bottom: 40px;
-  /* add space for icons */
-}
-
-.movie-card-actions {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-
-  display: flex;
-  gap: 10px;
-}
-
-/* Base icon button */
-.icon-btn {
-  background: #ffffff;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  padding: 6px 8px;
-
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  transition: transform 0.15s ease, background-color 0.2s, color 0.2s;
-}
-
-/* Hover effect for all icons */
-.icon-btn:hover {
-  transform: scale(1.15);
-}
-
-/* Edit Icon Styling */
-.edit-icon {
-  color: #2563eb;
-  /* blue */
-}
-
-.edit-icon:hover {
-  background-color: #2563eb;
-  color: white;
-}
-
-/* Delete Icon Styling */
-.delete-icon {
-  color: #dc2626;
-  /* red */
-}
-
-.delete-icon:hover {
-  background-color: #dc2626;
-  color: white;
 }
