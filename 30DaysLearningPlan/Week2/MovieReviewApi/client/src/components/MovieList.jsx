@@ -177,7 +177,10 @@ export default function MovieList() {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2>Add New Movie</h2>
 
-            <AddMovieForm onMovieAdded={handleMovieAdded} />
+            <AddMovieForm
+              onMovieAdded={handleMovieAdded}
+              onClose={closeModal}
+            />
 
             <button className="modal-close" onClick={closeModal}>
               x

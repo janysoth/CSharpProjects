@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import api from "../services/api";
 import FormInput from "./FormInput";
+import Button from "./buttons/Button";
 
-const AddMovieForm = ({ onMovieAdded }) => {
+const AddMovieForm = ({ onMovieAdded, onClose }) => {
   const [formData, setFormData] = useState({
     title: "",
     genre: "",
@@ -16,6 +17,10 @@ const AddMovieForm = ({ onMovieAdded }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleCancel = () => {
+    if (onClose) onClose();
   };
 
   const validateForm = () => {
@@ -90,7 +95,14 @@ const AddMovieForm = ({ onMovieAdded }) => {
         error={errors.rating}
       />
 
-      <button type="submit" className="submit-btn">Add Movie</button>
+
+      <div className="form-actions">
+        <Button type="button" variant="danger" onClick={handleCancel}>
+          Cancel
+        </Button>
+
+        <Button type="submit">Add Movie</Button>
+      </div>
     </form>
   );
 };
