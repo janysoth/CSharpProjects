@@ -1,21 +1,42 @@
 // src/components/FormInput.jsx
-import React from "react";
-
-const FormInput = ({ label, name, value, onChange, error, type = "text" }) => {
+export default function FormInput({
+  label,
+  name,
+  value,
+  onChange,
+  error,
+  type = "text",
+}) {
   return (
-    <div className="form-group">
-      <label htmlFor={name}>{label}</label>
+    <div className="flex flex-col gap-1">
+      <label
+        htmlFor={name}
+        className="text-sm font-medium text-gray-700"
+      >
+        {label}
+      </label>
+
       <input
         type={type}
         id={name}
         name={name}
         value={value}
         onChange={onChange}
-        className={`input ${error ? "input-error" : ""}`}
+        className={`
+          w-full rounded-md px-3 py-2 border text-sm transition
+          focus:outline-none focus:ring-2 
+          ${error
+            ? "border-red-500 focus:ring-red-400 bg-red-50"
+            : "border-gray-300 focus:ring-blue-400 bg-white"
+          }
+        `}
       />
-      {error && <p className="error-text">{error}</p>}
+
+      {error && (
+        <p className="text-red-600 text-xs">
+          {error}
+        </p>
+      )}
     </div>
   );
-};
-
-export default FormInput;
+}

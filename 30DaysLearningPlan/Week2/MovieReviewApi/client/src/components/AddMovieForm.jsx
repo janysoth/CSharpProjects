@@ -60,9 +60,23 @@ const AddMovieForm = ({ onMovieAdded, onClose }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="add-movie-form">
-      {errors.form && <p className="error-text">{errors.form}</p>}
-      {success && <p className="success-text">{success}</p>}
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-lg mx-auto bg-white shadow-md rounded-lg p-6 space-y-5"
+    >
+      {/* Form-level Error */}
+      {errors.form && (
+        <p className="text-red-600 text-sm bg-red-100 px-3 py-2 rounded-md">
+          {errors.form}
+        </p>
+      )}
+
+      {/* Success Message */}
+      {success && (
+        <p className="text-green-600 text-sm bg-green-100 px-3 py-2 rounded-md">
+          {success}
+        </p>
+      )}
 
       <FormInput
         label="Title"
@@ -71,6 +85,7 @@ const AddMovieForm = ({ onMovieAdded, onClose }) => {
         onChange={handleChange}
         error={errors.title}
       />
+
       <FormInput
         label="Genre"
         name="genre"
@@ -78,6 +93,7 @@ const AddMovieForm = ({ onMovieAdded, onClose }) => {
         onChange={handleChange}
         error={errors.genre}
       />
+
       <FormInput
         label="Release Year"
         name="releaseYear"
@@ -86,6 +102,7 @@ const AddMovieForm = ({ onMovieAdded, onClose }) => {
         onChange={handleChange}
         error={errors.releaseYear}
       />
+
       <FormInput
         label="Rating (1–10)"
         name="rating"
@@ -95,13 +112,20 @@ const AddMovieForm = ({ onMovieAdded, onClose }) => {
         error={errors.rating}
       />
 
-
-      <div className="form-actions">
-        <Button type="button" variant="danger" onClick={handleCancel}>
+      {/* Buttons */}
+      <div className="flex justify-between items-center gap-4 pt-3">
+        <Button
+          type="button"
+          variant="danger"
+          onClick={handleCancel}
+          className="w-full"
+        >
           Cancel
         </Button>
 
-        <Button type="submit">Add Movie</Button>
+        <Button type="submit" className="w-full">
+          Add Movie
+        </Button>
       </div>
     </form>
   );
