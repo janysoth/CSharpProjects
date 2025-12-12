@@ -1,18 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { updateMovie } from "../services/api";
 import FormInput from "./FormInput";
+import Button from "./buttons/Button";
 
-/**
- * EditMovieModal Component
- * ------------------------
- * Allows the user to edit an existing movie.
- * Validates form input, shows errors, and updates the movie on save.
- */
 export default function EditMovieModal({ movie, onClose, onSuccess }) {
-
-  // --------------------------------------------
-  // 1️⃣ Form State
-  // --------------------------------------------
   const [form, setForm] = useState({
     title: movie.title || "",
     genre: movie.genre || "",
@@ -20,75 +11,56 @@ export default function EditMovieModal({ movie, onClose, onSuccess }) {
     rating: movie.rating || "",
   });
 
-  // Track saving progress + validation errors
   const [saving, setSaving] = useState(false);
   const [errors, setErrors] = useState({});
 
-  // --------------------------------------------
-  // 2️⃣ Handle Input Change
-  // --------------------------------------------
+  // -----------------------------
+  // 1️⃣ ESC key to close
+  // -----------------------------
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [onClose]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    // Update field value
     setForm((prev) => ({ ...prev, [name]: value }));
-
-    // Clear error message for that field
     setErrors((prev) => ({ ...prev, [name]: null }));
   };
 
-  // --------------------------------------------
-  // 3️⃣ Validation Logic
-  // --------------------------------------------
   const validate = () => {
     const newErrors = {};
+    const currentYear = new Date().getFullYear();
 
     if (!form.title.trim()) newErrors.title = "Title is required";
     if (!form.genre.trim()) newErrors.genre = "Genre is required";
-
-    const currentYear = new Date().getFullYear();
-
-    if (form.year && (form.year < 1800 || form.year > currentYear)) {
-      newErrors.year = `Enter a valid year (1800-${currentYear})`;
-    }
-
-    if (form.rating && (form.rating < 0 || form.rating > 10)) {
+    if (form.year && (form.year < 1800 || form.year > currentYear))
+      newErrors.year = `Enter a valid year (1800–${currentYear})`;
+    if (form.rating && (form.rating < 0 || form.rating > 10))
       newErrors.rating = "Rating must be between 0 and 10";
-    }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // True if no errors
+    return Object.keys(newErrors).length === 0;
   };
 
-  // --------------------------------------------
-  // 4️⃣ Save Movie Handler
-  // --------------------------------------------
-  const handleSave = async (e) => {
-    e.preventDefault();
-
-    // Stop if validation fails
+  const handleSave = async () => {
     if (!validate()) return;
 
     setSaving(true);
-
     try {
-      // Build API payload
       const payload = {
         title: form.title,
         genre: form.genre,
         year: parseInt(form.year),
         rating: parseFloat(form.rating),
       };
-
-      // Send update request
       const response = await updateMovie(movie.id, payload);
-
-      // Pass updated movie back to parent
       onSuccess(response.data.data);
-
-      // Temporary: refresh UI (you can remove later)
       window.location.reload();
-
     } catch (err) {
       console.error(err);
       alert("Failed to save movie. Please try again.");
@@ -97,23 +69,25 @@ export default function EditMovieModal({ movie, onClose, onSuccess }) {
     }
   };
 
-  // --------------------------------------------
-  // 5️⃣ UI Rendering
-  // --------------------------------------------
   return (
-    <div className="modal-overlay open">
-      <div className="modal-content">
-
+    <div
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[999] animate-fadeIn"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className="bg-white w-full max-w-md rounded-lg shadow-lg p-6 relative animate-scaleIn">
         {/* Close button */}
-        <button className="modal-close" onClick={onClose}>
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl leading-none"
+        >
           &times;
         </button>
 
-        <h3>Edit Movie</h3>
+        <h3 className="text-xl font-semibold mb-4">Edit Movie</h3>
 
-        <form>
-
-          {/* Title */}
+        <form className="space-y-4">
           <FormInput
             label="Title"
             name="title"
@@ -122,7 +96,6 @@ export default function EditMovieModal({ movie, onClose, onSuccess }) {
             error={errors.title}
           />
 
-          {/* Genre */}
           <FormInput
             label="Genre"
             name="genre"
@@ -131,7 +104,6 @@ export default function EditMovieModal({ movie, onClose, onSuccess }) {
             error={errors.genre}
           />
 
-          {/* Year */}
           <FormInput
             label="Year"
             name="year"
@@ -141,7 +113,6 @@ export default function EditMovieModal({ movie, onClose, onSuccess }) {
             error={errors.year}
           />
 
-          {/* Rating */}
           <FormInput
             label="Rating"
             name="rating"
@@ -151,36 +122,28 @@ export default function EditMovieModal({ movie, onClose, onSuccess }) {
             error={errors.rating}
           />
 
-          {/* Buttons */}
-          <div
-            style={{
-              marginTop: 16,
-              display: "flex",
-              justifyContent: "flex-end",
-              gap: 10,
-            }}
-          >
-            <button
+          {/* Buttons (matches AddMovieForm) */}
+          <div className="flex justify-between items-center gap-4 pt-4">
+            <Button
               type="button"
-              className="submit-btn"
+              variant="danger"
               onClick={onClose}
               disabled={saving}
+              className="w-full"
             >
               Cancel
-            </button>
+            </Button>
 
-            <button
+            <Button
               type="button"
-              className="submit-btn"
               onClick={handleSave}
               disabled={saving}
+              className="w-full"
             >
               {saving ? "Saving…" : "Save"}
-            </button>
+            </Button>
           </div>
-
         </form>
-
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 // src/components/AddMovieForm.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../services/api";
 import FormInput from "./FormInput";
 import Button from "./buttons/Button";
@@ -18,6 +18,18 @@ const AddMovieForm = ({ onMovieAdded, onClose }) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  // -----------------------------
+  // 1️⃣ ESC key to close
+  // -----------------------------
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [onClose]);
 
   const handleCancel = () => {
     if (onClose) onClose();
