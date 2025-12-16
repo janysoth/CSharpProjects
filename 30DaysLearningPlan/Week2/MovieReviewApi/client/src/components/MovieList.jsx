@@ -8,81 +8,63 @@ import MovieCard from "./MovieCard";
 export default function MovieList() {
   /* ---------------------------------------------------
    * STATE MANAGEMENT
-   * ---------------------------------------------------
-   */
-
-  // Movies and loading/error states
+   * --------------------------------------------------- */
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
-  // Add Movie Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
-  // Edit Movie Modal state (stores the movie being edited)
   const [editMovieModal, setEditMovieModal] = useState(null);
-
-  // Delete Modal state
   const [deleteMovieId, setDeleteMovieId] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
   /* ---------------------------------------------------
-   * FETCH MOVIES FROM API
-   * ---------------------------------------------------
-   */
+   * FETCH MOVIES
+   * --------------------------------------------------- */
   const fetchMovies = async () => {
     try {
       setLoading(true);
       setError("");
 
       const res = await getAllMovies();
-      const moviesData = res?.data?.data ?? [];
-
-      setMovies(moviesData);
+      setMovies(res?.data?.data ?? []);
     } catch (err) {
       console.error(err);
       setError("Failed to load movies.");
-      setMovies([]); // fallback to empty list
+      setMovies([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // Load movies on mount
   useEffect(() => {
     fetchMovies();
   }, []);
 
   /* ---------------------------------------------------
-   * ADD MOVIE HANDLERS
-   * ---------------------------------------------------
-   */
-
-  const handleMovieAdded = () => {
-    fetchMovies(); // refresh list after adding
-    closeModal();
-  };
-
+   * ADD MOVIE
+   * --------------------------------------------------- */
   const openModal = () => setIsModalOpen(true);
 
-  // Close modal with fade-out animation
   const closeModal = () => {
     setIsClosing(true);
-
     setTimeout(() => {
       setIsClosing(false);
       setIsModalOpen(false);
     }, 300);
   };
 
-  /* ---------------------------------------------------
-   * DELETE MOVIE HANDLERS
-   * ---------------------------------------------------
-   */
+  const handleMovieAdded = () => {
+    fetchMovies();
+    closeModal();
+  };
 
-  // Open confirmation modal
+  /* ---------------------------------------------------
+   * DELETE MOVIE
+   * --------------------------------------------------- */
   const handleDeleteClick = (id) => {
     setDeleteMovieId(id);
   };
@@ -92,12 +74,9 @@ export default function MovieList() {
 
     try {
       setDeleteLoading(true);
-
       await deleteMovie(deleteMovieId);
 
-      // Remove movie from UI immediately
       setMovies((prev) => prev.filter((m) => m.id !== deleteMovieId));
-
       setMessage("Movie deleted successfully.");
     } catch (err) {
       console.error(err);
@@ -109,12 +88,11 @@ export default function MovieList() {
   };
 
   /* ---------------------------------------------------
-   * UPDATE MOVIE HANDLER
-   * ---------------------------------------------------
-   */
+   * UPDATE MOVIE
+   * --------------------------------------------------- */
   const handleUpdateMovie = (updatedMovie) => {
-    setMovies((prevMovies) =>
-      prevMovies.map((m) =>
+    setMovies((prev) =>
+      prev.map((m) =>
         m.id === updatedMovie.id ? { ...m, ...updatedMovie } : m
       )
     );
@@ -125,30 +103,40 @@ export default function MovieList() {
 
   /* ---------------------------------------------------
    * RENDER
-   * ---------------------------------------------------
-   */
+   * --------------------------------------------------- */
   return (
-    <section className="movie-section">
-      {/* Success / Error Messages */}
-      {message && <p className="message success">{message}</p>}
-      {error && <p className="message error">{error}</p>}
+    <section className="mx-auto max-w-6xl p-4">
+      {/* Messages */}
+      {message && (
+        <p className="mb-4 rounded bg-green-100 px-4 py-2 text-green-700">
+          {message}
+        </p>
+      )}
+      {error && (
+        <p className="mb-4 rounded bg-red-100 px-4 py-2 text-red-700">
+          {error}
+        </p>
+      )}
 
       {/* Header */}
-      <div className="movie-list-header">
-        <h2>Movie List</h2>
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-2xl font-bold">Movie List</h2>
 
-        <button className="add-movie-btn" onClick={openModal}>
+        <button
+          onClick={openModal}
+          className="rounded bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
+        >
           + Add Movie
         </button>
       </div>
 
-      {/* Loading or Empty State */}
+      {/* Content */}
       {loading ? (
-        <p className="message">Loading movies…</p>
+        <p className="text-gray-600">Loading movies…</p>
       ) : movies.length === 0 ? (
-        <p className="message">No movies found.</p>
+        <p className="text-gray-600">No movies found.</p>
       ) : (
-        <div className="movie-list">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
           {movies.map((movie) => (
             <MovieCard
               key={movie.id}
@@ -156,7 +144,6 @@ export default function MovieList() {
               genre={movie.genre}
               rating={movie.rating}
               releaseYear={movie.year}
-              deleting={deleteMovieId === movie.id && deleteLoading}
               onEdit={() => setEditMovieModal(movie)}
               onDelete={() => handleDeleteClick(movie.id)}
             />
@@ -164,35 +151,35 @@ export default function MovieList() {
         </div>
       )}
 
-      {/* ---------------------------------------------------
-       * ADD MOVIE MODAL
-       * ---------------------------------------------------
-       */}
+      {/* ADD MOVIE MODAL */}
       {(isModalOpen || isClosing) && (
         <div
-          className={`modal-overlay ${isModalOpen && !isClosing ? "open" : ""
-            }`}
+          className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 ${isModalOpen && !isClosing ? "opacity-100" : "opacity-0"
+            } transition-opacity`}
           onClick={closeModal}
         >
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2>Add New Movie</h2>
+          <div
+            className="relative w-full max-w-md rounded bg-white p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="mb-4 text-xl font-semibold">Add New Movie</h2>
 
             <AddMovieForm
               onMovieAdded={handleMovieAdded}
               onClose={closeModal}
             />
 
-            <button className="modal-close" onClick={closeModal}>
-              x
+            <button
+              onClick={closeModal}
+              className="absolute right-3 top-3 text-gray-500 hover:text-gray-700"
+            >
+              ✕
             </button>
           </div>
         </div>
       )}
 
-      {/* ---------------------------------------------------
-       * EDIT MOVIE MODAL
-       * ---------------------------------------------------
-       */}
+      {/* EDIT MOVIE MODAL */}
       {editMovieModal && (
         <EditMovieModal
           movie={editMovieModal}
@@ -201,10 +188,7 @@ export default function MovieList() {
         />
       )}
 
-      {/* ---------------------------------------------------
-       * DELETE CONFIRMATION MODAL
-       * ---------------------------------------------------
-       */}
+      {/* DELETE CONFIRM MODAL */}
       {deleteMovieId && (
         <ConfirmDeleteModal
           movieTitle={
