@@ -108,23 +108,27 @@ export default function MovieList() {
     <section className="mx-auto max-w-6xl p-4">
       {/* Messages */}
       {message && (
-        <p className="mb-4 rounded bg-green-100 px-4 py-2 text-green-700">
+        <p className="mb-4 rounded-md bg-green-100 px-4 py-2 text-green-700">
           {message}
         </p>
       )}
       {error && (
-        <p className="mb-4 rounded bg-red-100 px-4 py-2 text-red-700">
+        <p className="mb-4 rounded-md bg-red-100 px-4 py-2 text-red-700">
           {error}
         </p>
       )}
 
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Movie List</h2>
+        <h2 className="text-2xl font-bold text-gray-800">Movie List</h2>
 
         <button
           onClick={openModal}
-          className="rounded bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
+          className="
+            rounded-md bg-blue-600 px-4 py-2 text-white
+            transition hover:bg-blue-700
+            focus:outline-none focus:ring-2 focus:ring-blue-500
+          "
         >
           + Add Movie
         </button>
@@ -154,16 +158,17 @@ export default function MovieList() {
       {/* ADD MOVIE MODAL */}
       {(isModalOpen || isClosing) && (
         <div
-          className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 ${isModalOpen && !isClosing ? "opacity-100" : "opacity-0"
-            } transition-opacity`}
+          className={`
+            fixed inset-0 z-50 flex items-center justify-center
+            bg-black/50 transition-opacity
+            ${isModalOpen && !isClosing ? "opacity-100" : "opacity-0"}
+          `}
           onClick={closeModal}
         >
           <div
-            className="relative w-full max-w-md rounded bg-white p-6"
+            className="relative w-full max-w-lg"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="mb-4 text-xl font-semibold">Add New Movie</h2>
-
             <AddMovieForm
               onMovieAdded={handleMovieAdded}
               onClose={closeModal}
@@ -171,7 +176,12 @@ export default function MovieList() {
 
             <button
               onClick={closeModal}
-              className="absolute right-3 top-3 text-gray-500 hover:text-gray-700"
+              className="
+                absolute right-4 top-4
+                text-gray-400 hover:text-gray-600
+                focus:outline-none
+              "
+              aria-label="Close modal"
             >
               ✕
             </button>

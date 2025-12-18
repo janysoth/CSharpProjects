@@ -19,21 +19,14 @@ const AddMovieForm = ({ onMovieAdded, onClose }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // -----------------------------
-  // 1️⃣ ESC key to close
-  // -----------------------------
+  // ESC key closes form
   useEffect(() => {
     const handleEsc = (e) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") onClose?.();
     };
-
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
   }, [onClose]);
-
-  const handleCancel = () => {
-    if (onClose) onClose();
-  };
 
   const validateForm = () => {
     const errors = {};
@@ -48,10 +41,12 @@ const AddMovieForm = ({ onMovieAdded, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length > 0) {
+
+    if (Object.keys(validationErrors).length) {
       setErrors(validationErrors);
       return;
     }
+
     setErrors({});
     try {
       await api.post("/add-movie", {
@@ -60,12 +55,11 @@ const AddMovieForm = ({ onMovieAdded, onClose }) => {
         year: Number(formData.releaseYear),
         rating: Number(formData.rating)
       });
+
       setSuccess("Movie added successfully!");
       setFormData({ title: "", genre: "", releaseYear: "", rating: "" });
-
-      if (onMovieAdded) onMovieAdded();
-    } catch (err) {
-      console.error(err);
+      onMovieAdded?.();
+    } catch {
       setSuccess("");
       setErrors({ form: "Failed to add movie. Please try again." });
     }
@@ -74,68 +68,96 @@ const AddMovieForm = ({ onMovieAdded, onClose }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-lg mx-auto bg-white shadow-md rounded-lg p-6 space-y-5"
+      className="
+        w-full max-w-lg mx-auto
+        bg-white
+        rounded-xl
+        shadow-lg
+        border border-gray-100
+        p-6 sm:p-8
+        space-y-6
+      "
     >
+      {/* Header */}
+      <div className="space-y-1">
+        <h2 className="text-xl font-semibold text-gray-800">
+          Add New Movie
+        </h2>
+        <p className="text-sm text-gray-500">
+          Enter movie details below
+        </p>
+      </div>
+
+      <div className="h-px bg-gray-200" />
+
       {/* Form-level Error */}
       {errors.form && (
-        <p className="text-red-600 text-sm bg-red-100 px-3 py-2 rounded-md">
+        <div className="rounded-md bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
           {errors.form}
-        </p>
+        </div>
       )}
 
       {/* Success Message */}
       {success && (
-        <p className="text-green-600 text-sm bg-green-100 px-3 py-2 rounded-md">
+        <div className="rounded-md bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
           {success}
-        </p>
+        </div>
       )}
 
-      <FormInput
-        label="Title"
-        name="title"
-        value={formData.title}
-        onChange={handleChange}
-        error={errors.title}
-      />
+      {/* Inputs */}
+      <div className="grid grid-cols-1 gap-5">
+        <FormInput
+          label="Title"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          error={errors.title}
+        />
 
-      <FormInput
-        label="Genre"
-        name="genre"
-        value={formData.genre}
-        onChange={handleChange}
-        error={errors.genre}
-      />
+        <FormInput
+          label="Genre"
+          name="genre"
+          value={formData.genre}
+          onChange={handleChange}
+          error={errors.genre}
+        />
 
-      <FormInput
-        label="Release Year"
-        name="releaseYear"
-        type="number"
-        value={formData.releaseYear}
-        onChange={handleChange}
-        error={errors.releaseYear}
-      />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <FormInput
+            label="Release Year"
+            name="releaseYear"
+            type="number"
+            value={formData.releaseYear}
+            onChange={handleChange}
+            error={errors.releaseYear}
+          />
 
-      <FormInput
-        label="Rating (1–10)"
-        name="rating"
-        type="number"
-        value={formData.rating}
-        onChange={handleChange}
-        error={errors.rating}
-      />
+          <FormInput
+            label="Rating (1–10)"
+            name="rating"
+            type="number"
+            value={formData.rating}
+            onChange={handleChange}
+            error={errors.rating}
+          />
+        </div>
+      </div>
 
       {/* Buttons */}
-      <div className="flex justify-between items-center gap-4 pt-3">
+      <div className="flex gap-3 pt-4">
         <Button
           type="button"
           variant="danger"
-          onClick={handleCancel}
-          className="w-full"
+          onClick={onClose}
+          className="flex-1"
         >
           Cancel
         </Button>
 
-        <Button type="submit" className="w-full">
+        <Button
+          type="submit"
+          className="flex-1"
+        >
           Add Movie
         </Button>
       </div>
